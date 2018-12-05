@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'user_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 
 class AboutPage extends StatefulWidget {
@@ -22,6 +23,24 @@ class _AboutPageState extends State<AboutPage> {
       devicePlatform = "Android";
     }
     deviceName = Platform.localHostname;
+  }
+
+  launchContributeUrl() async {
+    const url = 'https://github.com/BK1031/VC-DECA-flutter';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  launchGuidelinesUrl() async {
+    const url = 'https://github.com/BK1031/VC-DECA-flutter/wiki/contributing';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -104,6 +123,33 @@ class _AboutPageState extends State<AboutPage> {
                     ),
                     new ListTile(
                       subtitle: new Text("Beta Testers\n", style: TextStyle(fontFamily: "Product Sans",)),
+                    ),
+                  ],
+                ),
+              ),
+              new Padding(padding: EdgeInsets.all(16.0)),
+              new Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Container(
+                      padding: EdgeInsets.all(16.0),
+                      child: new Text("Contributing", style: TextStyle(fontFamily: "Product Sans", color: Colors.blue, fontWeight: FontWeight.bold),),
+                    ),
+                    new ListTile(
+                      title: new Text("View on GitHub", style: TextStyle(fontFamily: "Product Sans",)),
+                      trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                      onTap: () {
+                        launchContributeUrl();
+                      },
+                    ),
+                    new Divider(height: 0.0, color: Colors.blue),
+                    new ListTile(
+                      title: new Text("Contributing Guidelines", style: TextStyle(fontFamily: "Product Sans",)),
+                      trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                      onTap: () {
+                        launchGuidelinesUrl();
+                      },
                     ),
                   ],
                 ),

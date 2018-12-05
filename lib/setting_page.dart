@@ -216,7 +216,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   launchHelpUrl() async {
-    const url = 'https://github.com/bk1031/vc-deca-flutter';
+    const url = 'https://github.com/BK1031/VC-DECA-flutter/wiki/Help';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -417,7 +417,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   onTap: () {
                     launchBugReportUrl();
                   },
-                )
+                ),
+                new Divider(height: 0.0, color: Colors.blue),
               ],
             ),
           ),

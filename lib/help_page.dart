@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class HelpPage extends StatefulWidget {
   @override
@@ -19,6 +20,10 @@ class _HelpPageState extends State<HelpPage> {
                 fontWeight: FontWeight.bold
             )
         ),
+      ),
+      body: const WebView(
+        initialUrl: 'https://github.com/BK1031/VC-DECA-flutter/wiki/Help',
+        javaScriptMode: JavaScriptMode.unrestricted,
       ),
     );
   }
