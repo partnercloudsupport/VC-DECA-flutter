@@ -3,29 +3,27 @@ import 'user_info.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluro/fluro.dart';
 
-class SchedulePage extends StatefulWidget {
+class EventPage extends StatefulWidget {
   @override
-  _SchedulePageState createState() => _SchedulePageState();
+  _EventPageState createState() => _EventPageState();
 }
 
 class EventEntry {
   String key;
-  String eventBody;
 
-  EventEntry(this.eventBody);
+  EventEntry(this.key);
 
   EventEntry.fromSnapshot(DataSnapshot snapshot)
-      : key = snapshot.key,
-        eventBody = snapshot.value["body"].toString();
+      : key = snapshot.key;
 }
 
-class _SchedulePageState extends State<SchedulePage> {
+class _EventPageState extends State<EventPage> {
 
   final databaseRef = FirebaseDatabase.instance.reference();
 
   List<EventEntry> eventList = new List();
 
-  _SchedulePageState() {
+  _EventPageState() {
     databaseRef.child("events").onChildAdded.listen(onEventAdded);
   }
 
@@ -46,53 +44,10 @@ class _SchedulePageState extends State<SchedulePage> {
     else if (name == "Finance") {
       imagePath = 'images/finance.png';
     }
-    else if (name == "Hospitality + Tourism") {
-      imagePath = 'images/hospitality.png';
-    }
-    else if (name == "Marketing") {
-      imagePath = 'images/marketing.png';
-    }
-    else if (name == "Personal Financial Literacy") {
-      imagePath = 'images/personal-finance.png';
-    }
-    else if(name == "myDECA") {
-      return Icon(Icons.supervised_user_circle, color: Colors.blue, size: 35.0,);
-    }
     return Image.asset(
       imagePath,
       height: 35.0,
     );
-  }
-
-  void getCategoryColor(String name) {
-    if (name == "Business Management") {
-      eventColor = Color(0xFFfcc414);
-      print("YELLOW");
-    }
-    else if (name == "Entrepreneurship") {
-      eventColor = Color(0xFF818285);
-      print("GREY");
-    }
-    else if (name == "Finance") {
-      eventColor = Color(0xFF049e4d);
-      print("GREEN");
-    }
-    else if (name == "Hospitality + Tourism") {
-      eventColor = Color(0xFF046faf);
-      print("INDIGO");
-    }
-    else if (name == "Marketing") {
-      eventColor = Color(0xFFe4241c);
-      print("RED");
-    }
-    else if (name == "Personal Financial Literacy") {
-      eventColor = Color(0xFF7cc242);
-      print("LT GREEN");
-    }
-    else {
-      eventColor = Colors.blue;
-      print("COLOR NOT FOUND");
-    }
   }
 
   @override
@@ -103,7 +58,7 @@ class _SchedulePageState extends State<SchedulePage> {
       child: new Column(
         children: <Widget>[
           new Text(
-            "Select a category below.",
+            "Select an event type below.",
             style: TextStyle(fontFamily: "Product Sans", fontSize: 15.0)
           ),
           new Expanded(
@@ -116,15 +71,9 @@ class _SchedulePageState extends State<SchedulePage> {
                     children: <Widget>[
                       new ListTile(
                         onTap: () {
-                          selectedCategory = eventList[index].key;
-                          print(selectedCategory);
-                          getCategoryColor(eventList[index].key);
-                          if (selectedCategory != "myDECA") {
-                            router.navigateTo(context, '/eventCategory', transition: TransitionType.native);
-                          }
-                          else {
-                            router.navigateTo(context, '/myDECA', transition: TransitionType.native);
-                          }
+                          selectedType = eventList[index].key;
+                          print(selectedType);
+                          router.navigateTo(context, '/eventCluster', transition: TransitionType.native);
                         },
                         leading: getLeadingPic(eventList[index].key),
                         title: new Text(

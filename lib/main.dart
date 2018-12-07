@@ -22,6 +22,8 @@ import 'help_page.dart';
 import 'mydeca_page.dart';
 import 'package:fluro/fluro.dart';
 import 'profile_pic.dart';
+import 'conferences.dart';
+import 'event_cluster.dart';
 
 void main() {
 
@@ -74,11 +76,15 @@ void main() {
   }));
 
   router.define('/event', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new EventPage();
+    return new EventViewPage();
   }));
 
   router.define('/eventCategory', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new EventCategoryPage();
+  }));
+
+  router.define('/eventCluster', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new ClusterPage();
   }));
 
   router.define('/myDECA', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {

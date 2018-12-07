@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_page.dart';
 import 'setting_page.dart';
-import 'schedule_page.dart';
+import 'events_page.dart';
 import 'chat_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'conferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'user_drawer.dart';
 import 'user_info.dart';
@@ -194,13 +194,17 @@ class _TabBarControllerState extends State<TabBarController> {
   }
 
   void pageChanged(int index) {
+    print("Current Tab: $index");
     setState(() {
       currentTabButton = null;
       currentTab = index;
       if (currentTab == 1) {
-        title = "Schedule";
+        title = "Conferences";
       }
       else if (currentTab == 2) {
+        title = "Events";
+      }
+      else if (currentTab == 3) {
         title = "Chat";
         if (role == "Admin") {
           currentTabButton = new FloatingActionButton(
@@ -210,7 +214,7 @@ class _TabBarControllerState extends State<TabBarController> {
           );
         }
       }
-      else if (currentTab == 3) {
+      else if (currentTab == 4) {
         title = "Settings";
       }
       else {
@@ -319,7 +323,10 @@ class _TabBarControllerState extends State<TabBarController> {
                 title: Text("Home", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
             new BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.collections),
-                title: Text("Schedule", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
+                title: Text("Conferences", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
+            new BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.collections),
+                title: Text("Events", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
             new BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.conversation_bubble),
                 title: Text("Chat", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
@@ -337,7 +344,8 @@ class _TabBarControllerState extends State<TabBarController> {
             controller: pageController,
             children: <Widget>[
               HomePage(),
-              SchedulePage(),
+              ConferencesPage(),
+              EventPage(),
               ChatPage(),
               SettingsPage()
             ],

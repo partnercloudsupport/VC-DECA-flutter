@@ -3,9 +3,9 @@ import 'user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class EventPage extends StatefulWidget {
+class EventViewPage extends StatefulWidget {
   @override
-  _EventPageState createState() => _EventPageState();
+  _EventViewPageState createState() => _EventViewPageState();
 }
 
 class EventListing {
@@ -23,7 +23,7 @@ class EventListing {
         eventSchool = snapshot.value["school"].toString();
 }
 
-class _EventPageState extends State<EventPage> {
+class _EventViewPageState extends State<EventViewPage> {
 
   final databaseRef = FirebaseDatabase.instance.reference();
   List<EventListing> eventList = new List();
@@ -73,7 +73,7 @@ class _EventPageState extends State<EventPage> {
     databaseRef.child("events").child(selectedCategory).child(selectedEvent).child(selectedYear).child("events").onChildAdded.listen(onEventAdded);
   }
 
-  _EventPageState() {
+  _EventViewPageState() {
     if (role == "Admin") {
       _visible = true;
     }
