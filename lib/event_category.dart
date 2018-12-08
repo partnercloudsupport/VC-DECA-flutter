@@ -33,7 +33,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
     if (role == "Admin") {
       _visible = true;
     }
-    databaseRef.child("events").child(selectedCategory).onChildAdded.listen(onEventAdded);
+    databaseRef.child("events").child(selectedType).child(selectedCategory).onChildAdded.listen(onEventAdded);
   }
 
   onEventAdded(Event event) {
@@ -96,12 +96,12 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
               onPressed: () {
                 // Update database here
                 if (name != "" && short != "" && body != "") {
-                  databaseRef.child("events").child(selectedCategory).child(name).update({
+                  databaseRef.child("events").child(selectedType).child(selectedCategory).child(name).update({
                     "body": body,
                     "short": short
                   });
                   for (int i = 0; i < yearsList.length; i++) {
-                    databaseRef.child("events").child(selectedCategory).child(name).child(yearsList[i]).update({
+                    databaseRef.child("events").child(selectedType).child(selectedCategory).child(name).child(yearsList[i]).update({
                       "location": "Location TBD"
                     });
                   }
@@ -152,7 +152,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
         padding: EdgeInsets.all(16.0),
         child: new Column(
           children: <Widget>[
-            new Text("Select an event below.", style: TextStyle(fontFamily: "Product Sans", fontSize: 15.0)),
+            new Text("Select a event below.", style: TextStyle(fontFamily: "Product Sans", fontSize: 15.0)),
             new Expanded(
               child: new ListView.builder(
                 itemCount: eventList.length,

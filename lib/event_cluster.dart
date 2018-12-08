@@ -55,9 +55,6 @@ class _ClusterPageState extends State<ClusterPage> {
     else if (name == "Personal Financial Literacy") {
       imagePath = 'images/personal-finance.png';
     }
-    else if(name == "myDECA") {
-      return Icon(Icons.supervised_user_circle, color: Colors.blue, size: 35.0,);
-    }
     return Image.asset(
       imagePath,
       height: 35.0,
@@ -100,7 +97,7 @@ class _ClusterPageState extends State<ClusterPage> {
     return new Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: new Text(selectedType),
+        title: new Text(selectedType + " Events"),
         textTheme: TextTheme(
             title: TextStyle(
                 fontFamily: "Product Sans",

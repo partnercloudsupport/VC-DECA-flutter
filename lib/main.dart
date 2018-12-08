@@ -18,11 +18,12 @@ import 'about_page.dart';
 import 'bug_report.dart';
 import 'event_category.dart';
 import 'event_view.dart';
+import 'conference_event_view.dart';
+import 'conference_view.dart';
 import 'help_page.dart';
 import 'mydeca_page.dart';
 import 'package:fluro/fluro.dart';
 import 'profile_pic.dart';
-import 'conferences.dart';
 import 'event_cluster.dart';
 
 void main() {
@@ -89,6 +90,10 @@ void main() {
 
   router.define('/myDECA', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new MyDecaPage();
+  }));
+
+  router.define('/conference', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new ConferenceViewPage();
   }));
 
   router.define('/bugReport', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {

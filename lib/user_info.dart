@@ -21,11 +21,13 @@ bool chatNotifications = true;
 String role = "Member";
 
 String selectedAlert = "";
+
 String selectedYear = "Please select a conference";
 
 String selectedCategory = "";
 String selectedEvent = "";
 String selectedType = "";
+
 Color eventColor = Colors.blue;
 
 String selectedMessage = "";
