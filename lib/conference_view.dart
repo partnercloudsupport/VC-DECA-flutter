@@ -9,20 +9,34 @@ class ConferenceViewPage extends StatefulWidget {
 class _ConferenceViewPageState extends State<ConferenceViewPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: eventColor,
-        title: new Text(selectedYear),
-        centerTitle: true,
-        textTheme: TextTheme(
-            title: TextStyle(
-                fontFamily: "Product Sans",
-                fontSize: 25.0,
-                fontWeight: FontWeight.bold
-            )
+    return new DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: new Text(selectedYear.split(" ")[1]),
+          centerTitle: true,
+          textTheme: TextTheme(
+              title: TextStyle(
+                  fontFamily: "Product Sans",
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold
+              )
+          ),
+          bottom: new TabBar(
+            tabs: <Widget>[
+              new Tab(text: "Hello",),
+              new Tab(text: "Ok",)
+            ],
+          ),
+        ),
+
+        body: new TabBarView(
+          children: <Widget>[
+            Center( child: Text("Page 1")),
+            Center( child: Text("Page 2")),
+          ],
         ),
       ),
-      body: new Container(),
     );
   }
 }
