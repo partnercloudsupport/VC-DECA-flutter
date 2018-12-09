@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'user_info.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class ConferenceViewPage extends StatefulWidget {
   @override
@@ -8,34 +11,52 @@ class ConferenceViewPage extends StatefulWidget {
 
 class _ConferenceViewPageState extends State<ConferenceViewPage> {
   @override
-  Widget build(BuildContext context) {
-    return new DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: new Text(selectedYear.split(" ")[1]),
-          centerTitle: true,
-          textTheme: TextTheme(
-              title: TextStyle(
-                  fontFamily: "Product Sans",
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold
-              )
-          ),
-          bottom: new TabBar(
-            tabs: <Widget>[
-              new Tab(text: "Hello",),
-              new Tab(text: "Ok",)
-            ],
-          ),
-        ),
 
-        body: new TabBarView(
-          children: <Widget>[
-            Center( child: Text("Page 1")),
-            Center( child: Text("Page 2")),
-          ],
-        ),
+  final databaseRef = FirebaseDatabase.instance.reference();
+  final storageRef = FirebaseStorage.instance.ref();
+
+  String mainUrl = "http://www.californiadeca.org/m/img/scdc-logo-white.png";
+
+  _ConferenceViewPageState() {
+    databaseRef.child("conferences").child(selectedYear).once().then((DataSnapshot snapshot) {
+      setState(() {
+        mainUrl = snapshot.value["imageUrl"];
+      });
+    });
+  }
+
+  List buildTextViews(int count) {
+    List<Widget> strings = List();
+    for (int i = 1; i <= count; i++) {
+      strings.add(new Padding(padding: new EdgeInsets.all(16.0),
+          child: new Text("Item number " + i.toString(),
+              style: new TextStyle(fontSize: 20.0))));
+    }
+    return strings;
+  }
+
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      body: new CustomScrollView(
+        slivers: <Widget>[
+          new CupertinoSliverNavigationBar(
+            largeTitle: new Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                new Text(
+                  selectedYear.split(" ")[0],
+                  style: TextStyle(fontFamily: "Product Sans", fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                new Text(
+                  selectedYear.split(" ")[1],
+                  style: TextStyle(fontFamily: "Product Sans", fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.white),
+                )
+              ],
+            ),
+          ),
+          new SliverList(delegate: new SliverChildListDelegate(buildTextViews(20))),
+        ],
       ),
     );
   }

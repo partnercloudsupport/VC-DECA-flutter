@@ -319,19 +319,19 @@ class _TabBarControllerState extends State<TabBarController> {
           onTap: tabTapped,
           items: [
             new BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.home),
+                icon: Icon(Icons.home),
                 title: Text("Home", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
             new BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.collections),
+                icon: Icon(Icons.group),
                 title: Text("Conferences", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
             new BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.collections),
+                icon: Icon(Icons.event),
                 title: Text("Events", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
             new BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.conversation_bubble),
+                icon: Icon(Icons.chat),
                 title: Text("Chat", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
             new BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.settings),
+                icon: Icon(Icons.settings),
                 title: Text("Settings", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
           ],
         ),
