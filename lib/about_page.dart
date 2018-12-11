@@ -179,7 +179,12 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                 ),
                 new Padding(padding: EdgeInsets.all(16.0)),
-                new Text("© Equinox Initiative 2018", style: TextStyle(fontFamily: "Product Sans", color: Colors.grey),)
+                new Text("© Equinox Initiative 2018", style: TextStyle(fontFamily: "Product Sans", color: Colors.grey),),
+                new Image.asset(
+                                'images/full_black_trans.png',
+                                height: 120.0,
+                                color: Colors.grey,
+                              ),
               ],
             ),
           ),

@@ -78,15 +78,27 @@ class _UserDrawerState extends State<UserDrawer> {
     return new Scaffold(
       bottomNavigationBar: new SafeArea(
         child: Container(
-          padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 32.0),
-          child: new ListTile(
-            title: new RaisedButton(
-              child: new Text("Sign Out", style: TextStyle(fontFamily: "Product Sans", fontSize: 17.0)),
-              color: Colors.red,
-              textColor: Colors.white,
-              onPressed: signOutBottomSheetMenu,
-            ),
-          ),
+          height: 200.0,
+          padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              new Image.asset(
+                'images/full_black_trans.png',
+                height: 100.0,
+                color: Colors.grey,
+              ),
+              new ListTile(
+                title: new RaisedButton(
+                  child: new Text("Sign Out", style: TextStyle(fontFamily: "Product Sans", fontSize: 17.0)),
+                  color: Colors.red,
+                  textColor: Colors.white,
+                  onPressed: signOutBottomSheetMenu,
+                ),
+              ),
+            ],
+          )
         ),
       ),
       body: new Container(
