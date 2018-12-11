@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'conference_media_page.dart';
 import 'user_info.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -25,39 +26,48 @@ class _ConferenceViewPageState extends State<ConferenceViewPage> {
     });
   }
 
-  List buildTextViews(int count) {
-    List<Widget> strings = List();
-    for (int i = 1; i <= count; i++) {
-      strings.add(new Padding(padding: new EdgeInsets.all(16.0),
-          child: new Text("Item number " + i.toString(),
-              style: new TextStyle(fontSize: 20.0))));
-    }
-    return strings;
-  }
-
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new CustomScrollView(
-        slivers: <Widget>[
-          new CupertinoSliverNavigationBar(
-            largeTitle: new Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                new Text(
-                  selectedYear.split(" ")[0],
-                  style: TextStyle(fontFamily: "Product Sans", fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-                new Text(
-                  selectedYear.split(" ")[1],
-                  style: TextStyle(fontFamily: "Product Sans", fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.white),
-                )
-              ],
-            ),
+    return new DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(text: "OVERVIEW",),
+              Tab(text: "SCHEDULE",),
+              Tab(text: "MEDIA"),
+            ],
           ),
-          new SliverList(delegate: new SliverChildListDelegate(buildTextViews(20))),
-        ],
+          title: new Text(selectedYear.split(" ")[1]),
+          centerTitle: true,
+          textTheme: TextTheme(
+              title: TextStyle(
+                  fontFamily: "Product Sans",
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold
+              )
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            new ConferenceOverview(),
+            Center(child: Text("Coming Soon...")),
+            new ConferenceMediaPage()
+          ],
+        ),
       ),
     );
+  }
+}
+
+class ConferenceOverview extends StatefulWidget {
+  @override
+  _ConferenceOverviewState createState() => _ConferenceOverviewState();
+}
+
+class _ConferenceOverviewState extends State<ConferenceOverview> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
