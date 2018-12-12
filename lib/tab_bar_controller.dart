@@ -10,6 +10,7 @@ import 'events_page.dart';
 import 'chat_page.dart';
 import 'conferences.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'user_drawer.dart';
 import 'user_info.dart';
 
@@ -118,6 +119,40 @@ class _TabBarControllerState extends State<TabBarController> {
               },
             ),
           ],
+        );
+      },
+    );
+  }
+
+  void serverUpdateDialog() {
+    newAlertBody = "";
+    newAlertTitle = "";
+    // flutter defined function
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Server Update", style: TextStyle(fontFamily: "Product Sans"),),
+          content: new Container(
+            height: 250.0,
+            child: new Column(
+              children: <Widget>[
+                new Text(
+                  "The server is currently updating. We appreciate your patience during this time. This alert will automatically disappear when the server is finished updating.",
+                  style: TextStyle(fontFamily: "Product Sans"),
+                ),
+                new Padding(padding: EdgeInsets.all(25.0)),
+                new HeartbeatProgressIndicator(
+                  child: new Image.asset(
+                    'images/logo_blue_trans.png',
+                    height: 75.0,
+                  ),
+                )
+              ],
+            ),
+          ),
         );
       },
     );
@@ -293,6 +328,12 @@ class _TabBarControllerState extends State<TabBarController> {
       setState(() {
         yearsList.add(new EventYearListing.fromSnapshot(event.snapshot).key);
       });
+    });
+    databaseRef.child("serverUpdate").once().then((DataSnapshot snapshot) {
+      if (snapshot.value) {
+        print("SERVER UPDATING...");
+        serverUpdateDialog();
+      }
     });
   }
 
