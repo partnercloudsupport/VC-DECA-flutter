@@ -16,19 +16,59 @@ class _EventViewPageState extends State<EventViewPage> {
   String categoryTitle = "";
   String categoryBody = "";
 
+  String one;
+  String two;
+  String three;
+
   _EventViewPageState() {
     databaseRef.child("events").child(selectedType).child(selectedCategory).child(selectedEvent).once().then((DataSnapshot snapshot) {
       setState(() {
         categoryTitle = snapshot.key;
         categoryShort = snapshot.value["short"];
         categoryBody = snapshot.value["body"];
+        one = snapshot.value["one"];
+        two = snapshot.value["two"];
+        three = snapshot.value["three"];
       });
     });
+  }
+
+  String getTitles(int num) {
+    String title = "[ERROR]";
+    if (num == 1 && selectedType == "Roleplay") {
+      title = "Participants";
+    }
+    else if (num == 2 && selectedType == "Roleplay") {
+      title = "Preperation Time";
+    }
+    else if (num == 3 && selectedType == "Roleplay") {
+      title = "Interview Time";
+    }
+    else if (num == 1 && selectedType == "Written") {
+      title = "Participants";
+    }
+    else if (num == 2 && selectedType == "Written") {
+      title = "Pages Allowed";
+    }
+    else if (num == 3 && selectedType == "Written") {
+      title = "Presentation Time";
+    }
+    else if (num == 1 && selectedType == "Online") {
+      title = "Participants";
+    }
+    else if (num == 2 && selectedType == "Online") {
+      title = "";
+    }
+    else if (num == 3 && selectedType == "Online") {
+      title = "";
+    }
+    return title;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: eventColor,
         title: new Text(categoryShort),
@@ -41,7 +81,8 @@ class _EventViewPageState extends State<EventViewPage> {
             )
         ),
       ),
-      body: new Container(
+      body: new SingleChildScrollView(
+        child: new Container(
           padding: EdgeInsets.all(16.0),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.height,
@@ -88,6 +129,30 @@ class _EventViewPageState extends State<EventViewPage> {
                 height: 20.0,
               ),
               new Text(
+                "Event Details:",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Product Sans",
+                  fontSize: 18.0,
+                ),
+              ),
+              new ListTile(
+                title: new Text(getTitles(1), style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.normal, fontFamily: "Product Sans",),),
+                trailing: new Text(one, style: TextStyle(fontSize: 17.0, fontFamily: "Product Sans")),
+              ),
+              new ListTile(
+                title: new Text(getTitles(2), style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.normal, fontFamily: "Product Sans",),),
+                trailing: new Text(two, style: TextStyle(fontSize: 17.0, fontFamily: "Product Sans")),
+              ),
+              new ListTile(
+                title: new Text(getTitles(3), style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.normal, fontFamily: "Product Sans",),),
+                trailing: new Text(three, style: TextStyle(fontSize: 17.0, fontFamily: "Product Sans")),
+              ),
+              new Divider(
+                color: eventColor,
+                height: 20.0,
+              ),
+              new Text(
                 "Event Resources:",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -95,9 +160,14 @@ class _EventViewPageState extends State<EventViewPage> {
                   fontSize: 18.0,
                 ),
               ),
+              new Padding(padding: EdgeInsets.all(8.0)),
+              new Center(
+                child: new Text("Coming soon..."),
+              )
             ],
           ),
-      ),
+        ),
+      )
     );
   }
 }

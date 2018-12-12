@@ -42,17 +42,230 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
     });
   }
 
-  void newEventDialog() {
+  void newRoleplayDialog() {
     String name = "";
     String short = "";
     String body = "";
+
+    String one = "";
+    String two = "";
+    String three = "";
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Add New Event"),
+          title: new Text("Add New Roleplay"),
+          content: new Container(
+            width: 1000.0,
+            height: 1000.0,
+            child: new SingleChildScrollView(
+                child: new Column(
+                  children: <Widget>[
+                    new TextField(
+                      autocorrect: true,
+                      decoration: InputDecoration(
+                          labelText: "Enter Event Name"
+                      ),
+                      onChanged: (String input) {
+                        name = input;
+                      },
+                    ),
+                    new TextField(
+                      textCapitalization: TextCapitalization.characters,
+                      decoration: InputDecoration(
+                        labelText: "Enter Event Short-Form",
+                      ),
+                      onChanged: (String input) {
+                        short = input;
+                      },
+                    ),
+                    new TextField(
+                      decoration: InputDecoration(
+                        labelText: "Enter Event Description",
+                      ),
+                      onChanged: (String input) {
+                        body = input;
+                      },
+                    ),
+                    new TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Enter # of Participants",
+                      ),
+                      onChanged: (String input) {
+                        one = input;
+                      },
+                    ),
+                    new TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Enter Preperation Time",
+                      ),
+                      onChanged: (String input) {
+                        two = input;
+                      },
+                    ),
+                    new TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Enter Interview Time",
+                      ),
+                      onChanged: (String input) {
+                        three = input;
+                      },
+                    ),
+                  ],
+                )
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("ADD"),
+              textColor: eventColor,
+              onPressed: () {
+                // Update database here
+                if (name != "" && short != "" && body != "") {
+                  databaseRef.child("events").child(selectedType).child(selectedCategory).child(name).update({
+                    "body": body,
+                    "short": short,
+                    "one": "$one Participants",
+                    "two": "$two Minutes",
+                    "three": "$three Minutes"
+                  });
+                  for (int i = 0; i < yearsList.length; i++) {
+                    databaseRef.child("events").child(selectedType).child(selectedCategory).child(name).child(yearsList[i]).update({
+                      "location": "Location TBD"
+                    });
+                  }
+                  Navigator.pop(context);
+                }
+              },
+            ),
+            new FlatButton(
+              child: new Text("CANCEL"),
+              textColor: eventColor,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void newOnlineDialog() {
+    String name = "";
+    String short = "";
+    String body = "";
+
+    String one = "";
+    String two = "";
+    String three = "";
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Add New Online"),
+          content: new Container(
+            width: 1000.0,
+            child: new SingleChildScrollView(
+                child: new Column(
+                  children: <Widget>[
+                    new TextField(
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                          labelText: "Enter Event Name"
+                      ),
+                      onChanged: (String input) {
+                        name = input;
+                      },
+                    ),
+                    new TextField(
+                      textCapitalization: TextCapitalization.characters,
+                      decoration: InputDecoration(
+                        labelText: "Enter Event Short-Form",
+                      ),
+                      onChanged: (String input) {
+                        short = input;
+                      },
+                    ),
+                    new TextField(
+                      decoration: InputDecoration(
+                        labelText: "Enter Event Description",
+                      ),
+                      onChanged: (String input) {
+                        body = input;
+                      },
+                    ),
+                    new TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Enter # of Participants",
+                      ),
+                      onChanged: (String input) {
+                        one = input;
+                      },
+                    ),
+                  ],
+                )
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("ADD"),
+              textColor: eventColor,
+              onPressed: () {
+                // Update database here
+                if (name != "" && short != "" && body != "") {
+                  databaseRef.child("events").child(selectedType).child(selectedCategory).child(name).update({
+                    "body": body,
+                    "short": short,
+                    "one": "$one Participants",
+                    "two": "",
+                    "three": ""
+                  });
+                  for (int i = 0; i < yearsList.length; i++) {
+                    databaseRef.child("events").child(selectedType).child(selectedCategory).child(name).child(yearsList[i]).update({
+                      "location": "Location TBD"
+                    });
+                  }
+                  Navigator.pop(context);
+                }
+              },
+            ),
+            new FlatButton(
+              child: new Text("CANCEL"),
+              textColor: eventColor,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void newWrittenDialog() {
+    String name = "";
+    String short = "";
+    String body = "";
+
+    String one = "";
+    String two = "";
+    String three = "";
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Add New Written"),
           content: new Container(
             width: 1000.0,
             child: new SingleChildScrollView(
@@ -85,6 +298,33 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                         body = input;
                       },
                     ),
+                    new TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Enter # of Participants",
+                      ),
+                      onChanged: (String input) {
+                        one = input;
+                      },
+                    ),
+                    new TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Enter # of Pages",
+                      ),
+                      onChanged: (String input) {
+                        two = input;
+                      },
+                    ),
+                    new TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Enter Presentation Time",
+                      ),
+                      onChanged: (String input) {
+                        three = input;
+                      },
+                    ),
                   ],
                 )
             ),
@@ -98,7 +338,10 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                 if (name != "" && short != "" && body != "") {
                   databaseRef.child("events").child(selectedType).child(selectedCategory).child(name).update({
                     "body": body,
-                    "short": short
+                    "short": short,
+                    "one": "$one Participants",
+                    "two": "$two Pages",
+                    "three": "$three Minutes"
                   });
                   for (int i = 0; i < yearsList.length; i++) {
                     databaseRef.child("events").child(selectedType).child(selectedCategory).child(name).child(yearsList[i]).update({
@@ -140,7 +383,15 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
             child: new IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                newEventDialog();
+                if (selectedType == "Roleplay") {
+                  newRoleplayDialog();
+                }
+                else if (selectedType == "Online") {
+                  newOnlineDialog();
+                }
+                else if (selectedType == "Written") {
+                  newWrittenDialog();
+                }
               },
             ),
             visible: _visible,

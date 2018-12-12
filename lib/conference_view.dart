@@ -68,6 +68,8 @@ class ConferenceOverview extends StatefulWidget {
 class _ConferenceOverviewState extends State<ConferenceOverview> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: new Text("Ya idk what goes here..."),
+    );
   }
 }
