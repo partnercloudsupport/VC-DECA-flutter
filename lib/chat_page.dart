@@ -96,6 +96,45 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  void leaveGroupBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (builder){
+          return SafeArea(
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  title: new Text('Are you sure you want to leave your chaperone group?'),
+                ),
+                new ListTile(
+                  leading: new Icon(Icons.check),
+                  title: new Text('Yeah, I wanna leave!'),
+                  onTap: () {
+                    chapGroupID = "Not in a Group";
+                    router.pop(context);
+                  },
+                  onLongPress: () {
+                    print("long press");
+                  },
+                ),
+                new ListTile(
+                  leading: new Icon(Icons.clear),
+                  title: new Text('Cancel'),
+                  onTap: () {
+                    router.pop(context);
+                  },
+                  onLongPress: () {
+
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+    );
+  }
+
   @override
   void initState() {
     super.initState();

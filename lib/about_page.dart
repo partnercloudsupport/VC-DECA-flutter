@@ -126,25 +126,28 @@ class _AboutPageState extends State<AboutPage> {
                       new Divider(height: 0.0, color: Colors.blue),
                       new ListTile(
                         title: new Text("Andrew Zhang", style: TextStyle(fontFamily: "Product Sans",)),
+                        subtitle: new Text("Documentation", style: TextStyle(fontFamily: "Product Sans",)),
                         onTap: () {
                           const url = 'https://www.instagram.com/a.__.zhang/';
                           launch(url);
                         },
                       ),
+                      new Divider(height: 0.0, color: Colors.blue),
                       new ListTile(
                         title: new Text("Kashyap Chaturvedula", style: TextStyle(fontFamily: "Product Sans",)),
-                        onTap: () {
-                          const url = 'https://twitter.com/BK1031_OFFICIAL';
-                          launch(url);
-                        },
                       ),
                       new ListTile(
                         title: new Text("Thomas Liang", style: TextStyle(fontFamily: "Product Sans",)),
-                        onTap: () {
-                          const url = 'https://twitter.com/BK1031_OFFICIAL';
-                          launch(url);
-                        },
                       ),
+                      new ListTile(
+                          title: new Text("Micah Kim", style: TextStyle(fontFamily: "Product Sans",)),
+                        ),
+                    new ListTile(
+                          title: new Text("Yaseen Elashmawi", style: TextStyle(fontFamily: "Product Sans",)),
+                        ),
+                    new ListTile(
+                          title: new Text("Amber Lao", style: TextStyle(fontFamily: "Product Sans",)),
+                        ),
                       new ListTile(
                         subtitle: new Text("Beta Testers\n", style: TextStyle(fontFamily: "Product Sans",)),
                       ),
@@ -181,10 +184,10 @@ class _AboutPageState extends State<AboutPage> {
                 new Padding(padding: EdgeInsets.all(16.0)),
                 new Text("© Equinox Initiative 2018", style: TextStyle(fontFamily: "Product Sans", color: Colors.grey),),
                 new Image.asset(
-                                'images/full_black_trans.png',
-                                height: 120.0,
-                                color: Colors.grey,
-                              ),
+                    'images/full_black_trans.png',
+                    height: 120.0,
+                    color: Colors.grey,
+                  ),
               ],
             ),
           ),

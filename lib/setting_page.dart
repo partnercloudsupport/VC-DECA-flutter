@@ -234,7 +234,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   launchFeedbackUrl() async {
-    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSccSlrKrL9RXlQ7TUQFfGM7QtKdUd6Rt-c3UzNzID6qpBmnfA/viewform?usp=sf_link';
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLScI-s76eVApPqCMVs5rtJ3KObxaB9qURfN0CzS4kl0lU3GdqA/viewform?usp=sf_link';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

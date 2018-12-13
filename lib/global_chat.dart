@@ -101,21 +101,12 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
     );
   }
 
-  TextAlign getAlignment(String messageAuthor) {
-    if (messageAuthor == name) {
-      return TextAlign.end;
-    }
-    else {
-      return TextAlign.start;
-    }
-  }
-
   Color getColor(String messageAuthor) {
     if (messageAuthor == name) {
       return Colors.blue;
     }
     else {
-      return Colors.black;
+      return Colors.amber;
     }
   }
 
@@ -146,6 +137,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
         padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32.0),
         child: new TextField(
           controller: myController,
+          autocorrect: true,
           textInputAction: TextInputAction.send,
           textCapitalization: TextCapitalization.sentences,
           style: TextStyle(fontFamily: "Product Sans", color: Colors.black, fontSize: 16.0),
@@ -162,6 +154,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: new SafeArea(
         child: new Container(
+          padding: EdgeInsets.all(8.0),
           color: Colors.white,
           height: listSize,
 //          padding: EdgeInsets.all(16.0),
@@ -171,25 +164,39 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
             itemBuilder: (BuildContext context, int index) {
               return new Slidable(
                 delegate: new SlidableDrawerDelegate(),
-                child: new ListTile(
-                  title: new Text(
-                    messageList[index].message,
-                    textAlign: getAlignment(messageList[index].author),
-                    style: TextStyle(
-                        fontFamily: "Product Sans",
+                child: new Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding: EdgeInsets.all(8.0),
+                  decoration: new BoxDecoration(
+                    border: new Border(
+                      left: new BorderSide(
                         color: getColor(messageList[index].author),
-                        fontSize: 16.0
+                        width: 3.0,
+                      )
                     ),
                   ),
-                  subtitle: new Text(
-                    messageList[index].author,
-                    textAlign: getAlignment(messageList[index].author),
-                    style: TextStyle(
-//                      color: getColor(messageList[index].author),
-                        fontFamily: "Product Sans",
-                        fontSize: 13.0
-                    ),
-                  ),
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: <Widget>[
+                      new Text(
+                        messageList[index].author,
+                        style: TextStyle(
+                            fontFamily: "Product Sans",
+                            color: getColor(messageList[index].author),
+                            fontSize: 16.0
+                        ),
+                      ),
+                      new Text(
+                        messageList[index].message,
+                        style: TextStyle(
+                            fontFamily: "Product Sans",
+                            color: Colors.black,
+                            fontSize: 16.0
+                        ),
+                      ),
+                    ],
+                  )
                 ),
                 secondaryActions: <Widget>[
                   new Visibility(
