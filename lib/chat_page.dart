@@ -17,13 +17,15 @@ class _ChatPageState extends State<ChatPage> {
   String joinGroup = "";
 
   void toOfficerChat() {
-    router.navigateTo(context, '/officerChat', transition: TransitionType.native);
+    selectedChat = "officers";
+    router.navigateTo(context, '/chat', transition: TransitionType.native);
   }
 
   void toChaperoneChat() {
     if (chapGroupID != "Not in a Group") {
       print("Already in a group!");
-      router.navigateTo(context, '/chapChat', transition: TransitionType.native);
+      selectedChat = chapGroupID;
+      router.navigateTo(context, '/chat', transition: TransitionType.native);
     }
     else {
       print("Need to join a group!");
@@ -111,11 +113,11 @@ class _ChatPageState extends State<ChatPage> {
                   leading: new Icon(Icons.check),
                   title: new Text('Yeah, I wanna leave!'),
                   onTap: () {
-                    chapGroupID = "Not in a Group";
-                    router.pop(context);
-                  },
-                  onLongPress: () {
-                    print("long press");
+                    setState(() {
+                      chapGroupID = "Not in a Group";
+                      databaseRef.child("users").child(userID).child("group").set(chapGroupID);
+                      router.pop(context);
+                    });
                   },
                 ),
                 new ListTile(
@@ -123,9 +125,6 @@ class _ChatPageState extends State<ChatPage> {
                   title: new Text('Cancel'),
                   onTap: () {
                     router.pop(context);
-                  },
-                  onLongPress: () {
-
                   },
                 ),
               ],
@@ -154,7 +153,8 @@ class _ChatPageState extends State<ChatPage> {
             title: Text("General Chat", style: TextStyle(fontFamily: "Product Sans"),),
             onTap: () {
               print("Entering Global Chat");
-              router.navigateTo(context, '/globalChat', transition: TransitionType.native);
+              selectedChat = "global";
+              router.navigateTo(context, '/chat', transition: TransitionType.native);
             },
             trailing: new Icon(
               Icons.arrow_forward_ios,
@@ -172,6 +172,7 @@ class _ChatPageState extends State<ChatPage> {
               print("Entering Chaperone Chat");
               toChaperoneChat();
             },
+            onLongPress: leaveGroupBottomSheet,
             trailing: new Icon(
               Icons.arrow_forward_ios,
               color: Colors.blue,

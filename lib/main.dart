@@ -12,8 +12,6 @@ import 'auth_checker.dart';
 import 'alert_view.dart';
 import 'tab_bar_controller.dart';
 import 'global_chat.dart';
-import 'chaperone_chat.dart';
-import 'officer_chat.dart';
 import 'about_page.dart';
 import 'bug_report.dart';
 import 'event_category.dart';
@@ -64,16 +62,8 @@ void main() {
     return new TabBarController();
   }));
 
-  router.define('/globalChat', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  router.define('/chat', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new GlobalChatPage();
-  }));
-
-  router.define('/officerChat', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new OfficerChatPage();
-  }));
-
-  router.define('/chapChat', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new ChaperoneChatPage();
   }));
 
   router.define('/event', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {

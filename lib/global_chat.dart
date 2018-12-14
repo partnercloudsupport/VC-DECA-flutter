@@ -44,7 +44,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
   bool _visible = false;
 
   _GlobalChatPageState() {
-    databaseRef.child("chat").child("global").onChildAdded.listen(onNewMessage);
+    databaseRef.child("chat").child(selectedChat).onChildAdded.listen(onNewMessage);
     if (role == "Admin") {
       _visible = true;
     }
@@ -83,7 +83,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
 
   void sendMessage(String input) {
     if (input != "" && input != " ") {
-      databaseRef.child("chat").child("global").push().update({
+      databaseRef.child("chat").child(selectedChat).push().update({
         "author": name,
         "message": input,
         "date": formatDate(DateTime.now(), [dd, '/', mm, '/', yyyy, ' ', HH, ':', nn]),
@@ -209,7 +209,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
                       caption: "Delete",
                       color: Colors.red,
                       onTap: () {
-                        databaseRef.child("chat").child("global").child(messageList[index].key).remove();
+                        databaseRef.child("chat").child(selectedChat).child(messageList[index].key).remove();
                       },
                     ),
                   )

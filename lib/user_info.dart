@@ -12,6 +12,7 @@ String name = "";
 String email = "";
 String userID = "";
 String chapGroupID = "Not in a Group";
+
 var profilePic;
 
 bool darkMode = false;
@@ -31,6 +32,7 @@ String selectedType = "";
 Color eventColor = Colors.blue;
 
 String selectedMessage = "";
+String selectedChat = "";
 
 List<String> yearsList = new List();
 
