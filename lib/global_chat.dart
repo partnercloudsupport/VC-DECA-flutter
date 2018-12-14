@@ -15,14 +15,14 @@ class ChatMessage {
   String key;
   String message;
   String author;
-  String authorID;
+  String authorRole;
 
-  ChatMessage(this.message, this.author, this.authorID);
+  ChatMessage(this.message, this.author, this.authorRole);
 
   ChatMessage.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
         message = snapshot.value["message"].toString(),
-        authorID = snapshot.value["uid"].toString(),
+        authorRole = snapshot.value["role"].toString(),
         author = snapshot.value["author"].toString();
 
   toJson() {
@@ -87,7 +87,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
         "author": name,
         "message": input,
         "date": formatDate(DateTime.now(), [dd, '/', mm, '/', yyyy, ' ', HH, ':', nn]),
-        "uid": userID
+        "role": role
       });
     }
     setState(() {
@@ -101,12 +101,15 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
     );
   }
 
-  Color getColor(String messageAuthor) {
-    if (messageAuthor == name) {
+  Color getColor(String authorRole, String messageAuthor) {
+    if (messageAuthor == name && authorRole == role) {
       return Colors.blue;
     }
-    else {
+    else if (authorRole == "Member") {
       return Colors.amber;
+    }
+    else {
+      return Colors.red;
     }
   }
 
@@ -170,7 +173,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
                   decoration: new BoxDecoration(
                     border: new Border(
                       left: new BorderSide(
-                        color: getColor(messageList[index].author),
+                        color: getColor(messageList[index].authorRole, messageList[index].author),
                         width: 3.0,
                       )
                     ),
@@ -183,7 +186,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
                         messageList[index].author,
                         style: TextStyle(
                             fontFamily: "Product Sans",
-                            color: getColor(messageList[index].author),
+                            color: getColor(messageList[index].authorRole, messageList[index].author),
                             fontSize: 16.0
                         ),
                       ),
