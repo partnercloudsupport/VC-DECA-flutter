@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'user_info.dart';
 
 class ConferencesPage extends StatefulWidget {
@@ -57,8 +58,8 @@ class _ConferencesPageState extends State<ConferencesPage> {
                 fit: StackFit.passthrough,
                 children: <Widget>[
                   new ClipRRect(
-                    child: new Image.network(
-                      conferenceList[index].imageUrl,
+                    child: new CachedNetworkImage(
+                      imageUrl: conferenceList[index].imageUrl,
                       height: 120.0,
                       width: 1000.0,
                       fit: BoxFit.fitWidth,

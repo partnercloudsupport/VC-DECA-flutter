@@ -70,10 +70,11 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
     });
   }
 
-  void onMessageType(String input) {
+  Future onMessageType(String input) async {
     setState(() {
       listSize = MediaQuery.of(context).size.height - (MediaQuery.of(context).size.height / 1.5);
     });
+    await new Future.delayed(const Duration(milliseconds: 300));
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
       duration: const Duration(milliseconds: 300),
