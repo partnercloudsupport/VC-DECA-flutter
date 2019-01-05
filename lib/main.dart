@@ -102,6 +102,14 @@ void main() {
     return new ProfilePic();
   }));
 
+  router.define('/hotelMap', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new HotelMapView();
+  }));
+
+  router.define('/conferenceAnnouncements', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new ConferenceAnnouncementsPage();
+  }));
+
   runApp(new MaterialApp(
     title: "VC DECA",
     home: ConnectionChecker(),

@@ -63,7 +63,8 @@ class _ConferenceMediaPageState extends State<ConferenceMediaPage> {
         child: new Icon(Icons.add),
         onPressed: newImage,
       ),
-      body: new Padding(
+      body: new Container(
+          color: Colors.white,
           padding: const EdgeInsets.all(8.0),
           child: new StaggeredGridView.countBuilder(
             staggeredTileBuilder: (int index) {
