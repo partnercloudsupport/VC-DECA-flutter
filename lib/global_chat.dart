@@ -114,6 +114,18 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
     }
   }
 
+  bool getVisibility(String authorRole, String messageAuthor) {
+    if (messageAuthor == name && authorRole == role) {
+      return false;
+    }
+    else if (authorRole == "Member") {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -181,15 +193,36 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
                   ),
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: <Widget>[
-                      new Text(
-                        messageList[index].author,
-                        style: TextStyle(
-                            fontFamily: "Product Sans",
-                            color: getColor(messageList[index].authorRole, messageList[index].author),
-                            fontSize: 16.0
-                        ),
+                      new Row(
+                        children: <Widget>[
+                          new Text(
+                            messageList[index].author,
+                            style: TextStyle(
+                                fontFamily: "Product Sans",
+                                color: getColor(messageList[index].authorRole, messageList[index].author),
+                                fontSize: 16.0
+                            ),
+                          ),
+                          new Padding(padding: EdgeInsets.all(4.0)),
+                          new Visibility(
+                            visible: getVisibility(messageList[index].authorRole, messageList[index].author),
+                            child: new Card(
+                                color: getColor(messageList[index].authorRole, messageList[index].author),
+                                child: new Container(
+                                  padding: EdgeInsets.all(4.0),
+                                  child: new Text(
+                                    messageList[index].authorRole,
+                                    style: TextStyle(
+                                        fontFamily: "Product Sans",
+                                        color: Colors.white,
+                                        fontSize: 16.0
+                                    ),
+                                  ),
+                                )
+                            ),
+                          )
+                        ],
                       ),
                       new Text(
                         messageList[index].message,
