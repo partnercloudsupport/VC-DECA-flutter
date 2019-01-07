@@ -110,6 +110,18 @@ void main() {
     return new ConferenceAnnouncementsPage();
   }));
 
+  router.define('/mapUrl', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new MapLocationView();
+  }));
+
+  router.define('/conferenceSite', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new ConferenceSitePage();
+  }));
+
+  router.define('/compEventSite', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new CompetitiveEventsPage();
+  }));
+
   runApp(new MaterialApp(
     title: "VC DECA",
     home: ConnectionChecker(),

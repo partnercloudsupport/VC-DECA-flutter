@@ -41,6 +41,31 @@ class _ConferencesPageState extends State<ConferencesPage> {
     });
   }
 
+  void missingDataDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Missing Conference Information"),
+          content: new Text(
+            "Ruh-roh! It looks like this conference is missing some information. Please check again later.",
+            style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("GOT IT"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,7 +77,14 @@ class _ConferencesPageState extends State<ConferencesPage> {
           return new GestureDetector(
             onTap: () {
               selectedYear = conferenceList[index].key;
-              router.navigateTo(context, '/conference', transition: TransitionType.native);
+              databaseRef.child("conferences").child(selectedYear).child("address").once().then((DataSnapshot snapshot) {
+                if (snapshot.value != null) {
+                  router.navigateTo(context, '/conference', transition: TransitionType.native);
+                }
+                else {
+                  missingDataDialog();
+                }
+              });
             },
             child: new Card(
               child: new Stack(
