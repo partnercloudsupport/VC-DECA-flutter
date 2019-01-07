@@ -316,7 +316,7 @@ class _TabBarControllerState extends State<TabBarController> {
       }
       _firebaseMessaging.subscribeToTopic("allDevices");
       print("All Devices Subscribed");
-      if (role != "Member") {
+      if (role == "Officer" || role == "Admin") {
         _firebaseMessaging.subscribeToTopic("officers");
         print("Officer Subscribed");
       }
