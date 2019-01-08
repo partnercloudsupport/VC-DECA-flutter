@@ -27,7 +27,7 @@ class _ProfilePicState extends State<ProfilePic> {
           ratioY: 1.0,
           maxHeight: 512,
           maxWidth: 512,
-          toolbarColor: Colors.blue,
+          toolbarColor: mainColor,
       );
       if (croppedImage != null) {
         setState(() {
@@ -65,7 +65,7 @@ class _ProfilePicState extends State<ProfilePic> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("Update Profile"),
         textTheme: TextTheme(
             title: TextStyle(

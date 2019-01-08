@@ -82,11 +82,11 @@ class _EventPageState extends State<EventPage> {
                               fontFamily: "Product Sans",
                             ),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios, color: Colors.blue,),
+                        trailing: Icon(Icons.arrow_forward_ios, color: mainColor,),
                       ),
                       new Divider(
                         height: 8.0,
-                        color: Colors.blue,
+                        color: mainColor,
                       ),
                     ],
                   ),

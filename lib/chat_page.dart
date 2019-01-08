@@ -17,6 +17,7 @@ class _ChatPageState extends State<ChatPage> {
   String joinGroup = "";
 
   void toOfficerChat() {
+    chatTitle = "Officers";
     selectedChat = "officers";
     router.navigateTo(context, '/chat', transition: TransitionType.native);
   }
@@ -24,6 +25,7 @@ class _ChatPageState extends State<ChatPage> {
   void toChaperoneChat() {
     if (chapGroupID != "Not in a Group") {
       print("Already in a group!");
+      chatTitle = "Chaperone Group";
       selectedChat = chapGroupID;
       router.navigateTo(context, '/chat', transition: TransitionType.native);
     }
@@ -154,16 +156,17 @@ class _ChatPageState extends State<ChatPage> {
             onTap: () {
               print("Entering Global Chat");
               selectedChat = "global";
+              chatTitle = "General";
               router.navigateTo(context, '/chat', transition: TransitionType.native);
             },
             trailing: new Icon(
               Icons.arrow_forward_ios,
-              color: Colors.blue,
+              color: mainColor,
             ),
           ),
           new Divider(
             height: 0.0,
-            color: Colors.blue,
+            color: mainColor,
           ),
           new ListTile(
             title: Text("Chaperone Group", style: TextStyle(fontFamily: "Product Sans")),
@@ -172,15 +175,19 @@ class _ChatPageState extends State<ChatPage> {
               print("Entering Chaperone Chat");
               toChaperoneChat();
             },
-            onLongPress: leaveGroupBottomSheet,
+            onLongPress: () {
+              if (chapGroupID != "Not in a Group") {
+                leaveGroupBottomSheet();
+              }
+            },
             trailing: new Icon(
               Icons.arrow_forward_ios,
-              color: Colors.blue,
+              color: mainColor,
             ),
           ),
           new Divider(
             height: 0.0,
-            color: Colors.blue,
+            color: mainColor,
           ),
           new Visibility(
             visible: _visible,
@@ -189,7 +196,7 @@ class _ChatPageState extends State<ChatPage> {
               onTap: toOfficerChat,
               trailing: new Icon(
                 Icons.arrow_forward_ios,
-                color: Colors.blue,
+                color: mainColor,
               ),
             ),
           ),
@@ -197,7 +204,7 @@ class _ChatPageState extends State<ChatPage> {
             visible: _visible,
             child: new Divider(
               height: 0.0,
-              color: Colors.blue,
+              color: mainColor,
             ),
           ),
         ],

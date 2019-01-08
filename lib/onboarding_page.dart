@@ -14,7 +14,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final pages = [
     new PageViewModel(
-        pageColor: Colors.blue,
+        pageColor: mainColor,
         iconImageAssetPath: 'images/events.png',
         body: Text(
           'View conference schedules to keep on top of all your DECA events',
@@ -31,7 +31,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         )
     ),
     new PageViewModel(
-      pageColor: Colors.blue,
+      pageColor: mainColor,
       iconImageAssetPath: 'images/alert.png',
       body: Text(
         'Be notified of imporant updates, including when your next event is about to start',
@@ -46,7 +46,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       textStyle: TextStyle(fontFamily: 'Product Sans', color: Colors.white),
     ),
     new PageViewModel(
-      pageColor: Colors.blue,
+      pageColor: mainColor,
       iconImageAssetPath: 'images/map.png',
       body: Text(
         'Find event locations quickly with our built-in maps',
@@ -61,7 +61,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       textStyle: TextStyle(fontFamily: 'Product Sans', color: Colors.white),
     ),
     new PageViewModel(
-      pageColor: Colors.blue,
+      pageColor: mainColor,
       iconImageAssetPath: 'images/platform.png',
       body: Text(
         'Easy access from all your favorite devices',
@@ -79,7 +79,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       textStyle: TextStyle(fontFamily: 'Product Sans', color: Colors.white),
     ),
     new PageViewModel(
-      pageColor: Colors.blue,
+      pageColor: mainColor,
       iconImageAssetPath: 'images/logo_white_trans.png',
       body: Text(
         'Click done to get started!',
@@ -99,7 +99,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      color: Colors.blue,
+      color: mainColor,
       child: new SafeArea(
         child: new IntroViewsFlutter(
           pages,

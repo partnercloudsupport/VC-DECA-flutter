@@ -47,7 +47,7 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: mainColor,
           title: new Text("About"),
           textTheme: TextTheme(
               title: TextStyle(
@@ -69,18 +69,18 @@ class _AboutPageState extends State<AboutPage> {
                     children: <Widget>[
                       new Container(
                         padding: EdgeInsets.all(16.0),
-                        child: new Text("Device", style: TextStyle(color: Colors.blue, fontFamily: "Product Sans",fontWeight: FontWeight.bold),),
+                        child: new Text("Device", style: TextStyle(color: mainColor, fontFamily: "Product Sans",fontWeight: FontWeight.bold),),
                       ),
                       new ListTile(
                         title: new Text("App Version", style: TextStyle(fontFamily: "Product Sans",)),
                         trailing: new Text("$appVersion$appStatus", style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
                       ),
-                      new Divider(height: 0.0, color: Colors.blue),
+                      new Divider(height: 0.0, color: mainColor),
                       new ListTile(
                         title: new Text("Device Name", style: TextStyle(fontFamily: "Product Sans",)),
                         trailing: new Text("$deviceName", style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
                       ),
-                      new Divider(height: 0.0, color: Colors.blue),
+                      new Divider(height: 0.0, color: mainColor),
                       new ListTile(
                         title: new Text("Platform", style: TextStyle(fontFamily: "Product Sans",)),
                         trailing: new Text("$devicePlatform", style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
@@ -95,7 +95,7 @@ class _AboutPageState extends State<AboutPage> {
                     children: <Widget>[
                       new Container(
                         padding: EdgeInsets.all(16.0),
-                        child: new Text("Credits", style: TextStyle(fontFamily: "Product Sans", color: Colors.blue, fontWeight: FontWeight.bold),),
+                        child: new Text("Credits", style: TextStyle(fontFamily: "Product Sans", color: mainColor, fontWeight: FontWeight.bold),),
                       ),
                       new ListTile(
                         title: new Text("Bharat Kathi", style: TextStyle(fontFamily: "Product Sans",)),
@@ -105,7 +105,7 @@ class _AboutPageState extends State<AboutPage> {
                           launch(url);
                         },
                       ),
-                      new Divider(height: 0.0, color: Colors.blue),
+                      new Divider(height: 0.0, color: mainColor),
                       new ListTile(
                         title: new Text("Myron Chan", style: TextStyle(fontFamily: "Product Sans",)),
                         subtitle: new Text("App Design", style: TextStyle(fontFamily: "Product Sans",)),
@@ -114,7 +114,7 @@ class _AboutPageState extends State<AboutPage> {
                           launch(url);
                         },
                       ),
-                      new Divider(height: 0.0, color: Colors.blue),
+                      new Divider(height: 0.0, color: mainColor),
                       new ListTile(
                         title: new Text("Ian Lau", style: TextStyle(fontFamily: "Product Sans",)),
                         subtitle: new Text("Marketing", style: TextStyle(fontFamily: "Product Sans",)),
@@ -123,7 +123,7 @@ class _AboutPageState extends State<AboutPage> {
                           launch(url);
                         },
                       ),
-                      new Divider(height: 0.0, color: Colors.blue),
+                      new Divider(height: 0.0, color: mainColor),
                       new ListTile(
                         title: new Text("Andrew Zhang", style: TextStyle(fontFamily: "Product Sans",)),
                         subtitle: new Text("Documentation", style: TextStyle(fontFamily: "Product Sans",)),
@@ -132,7 +132,7 @@ class _AboutPageState extends State<AboutPage> {
                           launch(url);
                         },
                       ),
-                      new Divider(height: 0.0, color: Colors.blue),
+                      new Divider(height: 0.0, color: mainColor),
                       new ListTile(
                         title: new Text("Kashyap Chaturvedula", style: TextStyle(fontFamily: "Product Sans",)),
                       ),
@@ -161,19 +161,19 @@ class _AboutPageState extends State<AboutPage> {
                     children: <Widget>[
                       new Container(
                         padding: EdgeInsets.all(16.0),
-                        child: new Text("Contributing", style: TextStyle(fontFamily: "Product Sans", color: Colors.blue, fontWeight: FontWeight.bold),),
+                        child: new Text("Contributing", style: TextStyle(fontFamily: "Product Sans", color: mainColor, fontWeight: FontWeight.bold),),
                       ),
                       new ListTile(
                         title: new Text("View on GitHub", style: TextStyle(fontFamily: "Product Sans",)),
-                        trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                        trailing: new Icon(Icons.arrow_forward_ios, color: mainColor),
                         onTap: () {
                           launchContributeUrl();
                         },
                       ),
-                      new Divider(height: 0.0, color: Colors.blue),
+                      new Divider(height: 0.0, color: mainColor),
                       new ListTile(
                         title: new Text("Contributing Guidelines", style: TextStyle(fontFamily: "Product Sans",)),
-                        trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                        trailing: new Icon(Icons.arrow_forward_ios, color: mainColor),
                         onTap: () {
                           launchGuidelinesUrl();
                         },

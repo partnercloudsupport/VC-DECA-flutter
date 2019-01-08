@@ -68,7 +68,7 @@ class _AuthCheckerState extends State<AuthChecker> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
+      color: mainColor,
     );
   }
 }

@@ -131,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: Text(
           "VC DECA",
           style: TextStyle(
@@ -151,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 decoration: InputDecoration(
                   icon: new Icon(Icons.person),
                   labelText: "Name",
-                  hintText: "Enter your name"
+                  hintText: "Enter your full name"
                 ),
                 autocorrect: true,
                 keyboardType: TextInputType.text,
@@ -197,19 +197,19 @@ class _RegisterPageState extends State<RegisterPage> {
               new RaisedButton(
                 child: buttonChild,
                 onPressed: register,
-                color: Colors.blue,
+                color: mainColor,
                 textColor: Colors.white,
-                highlightColor: Colors.blue,
+                highlightColor: mainColor,
               ),
               new Padding(padding: EdgeInsets.all(16.0)),
               new FlatButton(
                 child: new Text(
                   "Already have an account?",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: mainColor,
                   ),
                 ),
-                splashColor: Colors.blue,
+                splashColor: mainColor,
                 onPressed: () {
                   router.navigateTo(context,'/toLogin', transition: TransitionType.inFromRight);
                 },

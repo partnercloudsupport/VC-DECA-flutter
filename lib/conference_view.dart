@@ -153,7 +153,7 @@ class _ConferenceOverviewState extends State<ConferenceOverview> {
                 fontFamily: "Product Sans",
                 fontWeight: FontWeight.normal,
                 fontStyle: FontStyle.italic,
-                color: Colors.blue,
+                color: mainColor,
                 fontSize: 18.0,
               ),
             ),
@@ -167,7 +167,7 @@ class _ConferenceOverviewState extends State<ConferenceOverview> {
               ),
             ),
             new Divider(
-              color: Colors.blue,
+              color: mainColor,
               height: 20.0,
             ),
             new Text(
@@ -192,7 +192,7 @@ class _ConferenceOverviewState extends State<ConferenceOverview> {
                 });
               },
             ),
-            new Divider(height: 20.0, color: Colors.blue),
+            new Divider(height: 20.0, color: mainColor),
             new Text(
               "Conference Resources:",
               style: TextStyle(
@@ -215,10 +215,10 @@ class _ConferenceOverviewState extends State<ConferenceOverview> {
               },
               trailing: new Icon(
                 Icons.arrow_forward_ios,
-                color: Colors.blue,
+                color: mainColor,
               ),
             ),
-//            new Divider(height: 0.0, color: Colors.blue),
+//            new Divider(height: 0.0, color: mainColor),
             new ListTile(
               title: new Text("Announcements", style: TextStyle(fontFamily: "Product Sans"),),
               onTap: () {
@@ -233,7 +233,7 @@ class _ConferenceOverviewState extends State<ConferenceOverview> {
               },
               trailing: new Icon(
                 Icons.arrow_forward_ios,
-                color: Colors.blue,
+                color: mainColor,
               ),
             ),
             new ListTile(
@@ -252,11 +252,11 @@ class _ConferenceOverviewState extends State<ConferenceOverview> {
               },
               trailing: new Icon(
                 Icons.arrow_forward_ios,
-                color: Colors.blue,
+                color: mainColor,
               ),
             ),
             new ListTile(
-              title: new Text("Check out the official ${selectedYear.split(" ")[1]} website", style: TextStyle(fontFamily: "Product Sans", color: Colors.blue), textAlign: TextAlign.center,),
+              title: new Text("Check out the official ${selectedYear.split(" ")[1]} website", style: TextStyle(fontFamily: "Product Sans", color: mainColor), textAlign: TextAlign.center,),
               onTap: () {
                 router.navigateTo(context, '/conferenceSite', transition: TransitionType.native);
               },
@@ -291,7 +291,7 @@ class _HotelMapViewState extends State<HotelMapView> {
   Widget build(BuildContext context) {
     return new WebviewScaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("Hotel Map"),
         centerTitle: true,
         textTheme: TextTheme(
@@ -331,7 +331,7 @@ class _ConferenceAnnouncementsPageState extends State<ConferenceAnnouncementsPag
   Widget build(BuildContext context) {
     return new WebviewScaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("Announcements"),
         centerTitle: true,
         textTheme: TextTheme(
@@ -371,7 +371,7 @@ class _MapLocationViewState extends State<MapLocationView> {
   Widget build(BuildContext context) {
     return WebviewScaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("Map View"),
         centerTitle: true,
         textTheme: TextTheme(
@@ -411,7 +411,7 @@ class _ConferenceSitePageState extends State<ConferenceSitePage> {
   Widget build(BuildContext context) {
     return WebviewScaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("${selectedYear.split(" ")[1]} Site"),
         centerTitle: true,
         textTheme: TextTheme(
@@ -451,7 +451,7 @@ class _CompetitiveEventsPageState extends State<CompetitiveEventsPage> {
   Widget build(BuildContext context) {
     return WebviewScaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("Events Schedule"),
         centerTitle: true,
         textTheme: TextTheme(

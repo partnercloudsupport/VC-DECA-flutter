@@ -105,7 +105,7 @@ class _LoginPage extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: Text(
           "VC DECA",
           style: TextStyle(
@@ -148,7 +148,7 @@ class _LoginPage extends State<LoginPage> {
               new RaisedButton(
                 child: buttonChild,
                 onPressed: login,
-                color: Colors.blue,
+                color: mainColor,
                 textColor: Colors.white,
               ),
               new Padding(padding: EdgeInsets.all(16.0)),
@@ -156,10 +156,10 @@ class _LoginPage extends State<LoginPage> {
                 child: new Text(
                   "Don't have an account?",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: mainColor,
                   ),
                 ),
-                splashColor: Colors.blue,
+                splashColor: mainColor,
                 onPressed: () {
                   router.pop(context);
                 },

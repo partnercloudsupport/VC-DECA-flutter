@@ -87,7 +87,7 @@ class _ClusterPageState extends State<ClusterPage> {
       print("LT GREEN");
     }
     else {
-      eventColor = Colors.blue;
+      eventColor = mainColor;
       print("COLOR NOT FOUND");
     }
   }
@@ -96,7 +96,7 @@ class _ClusterPageState extends State<ClusterPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text(selectedType + " Events"),
         textTheme: TextTheme(
             title: TextStyle(
@@ -142,11 +142,11 @@ class _ClusterPageState extends State<ClusterPage> {
                                 fontFamily: "Product Sans",
                               ),
                             ),
-                            trailing: Icon(Icons.arrow_forward_ios, color: Colors.blue,),
+                            trailing: Icon(Icons.arrow_forward_ios, color: mainColor,),
                           ),
                           new Divider(
                             height: 8.0,
-                            color: Colors.blue,
+                            color: mainColor,
                           ),
                         ],
                       ),

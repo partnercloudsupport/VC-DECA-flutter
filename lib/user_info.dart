@@ -29,10 +29,12 @@ String selectedCategory = "";
 String selectedEvent = "";
 String selectedType = "";
 
-Color eventColor = Colors.blue;
+Color eventColor = const Color(0xFF0073CE);
+Color mainColor = const Color(0xFF0073CE);
 
 String selectedMessage = "";
 String selectedChat = "";
+String chatTitle = "General";
 
 List<String> yearsList = new List();
 

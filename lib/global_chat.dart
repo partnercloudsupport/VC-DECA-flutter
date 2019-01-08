@@ -104,13 +104,16 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
 
   Color getColor(String authorRole, String messageAuthor) {
     if (messageAuthor == name && authorRole == role) {
-      return Colors.blue;
+      return mainColor;
     }
     else if (authorRole == "Member") {
       return Colors.amber;
     }
+    else if (authorRole == "Bot") {
+      return Colors.greenAccent;
+    }
     else {
-      return Colors.red;
+      return Colors.redAccent;
     }
   }
 
@@ -136,8 +139,8 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: new Text("General"),
+        backgroundColor: mainColor,
+        title: new Text(chatTitle),
         textTheme: TextTheme(
             title: TextStyle(
                 fontSize: 25.0,

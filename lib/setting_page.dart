@@ -259,7 +259,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     name,
                     style: TextStyle(
                         fontSize: 25.0,
-                        color: Colors.blue,
+                        color: mainColor,
                         fontFamily: "Product Sans",
                         fontWeight: FontWeight.bold
                     ),
@@ -286,7 +286,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         trailing: new Text(userID, style: TextStyle(fontSize: 14.0, fontFamily: "Product Sans")),
                       ),
                       new ListTile(
-                        title: new Text("Update Profile", style: TextStyle(fontFamily: "Product Sans", color: Colors.blue), textAlign: TextAlign.center,),
+                        title: new Text("Update Profile", style: TextStyle(fontFamily: "Product Sans", color: mainColor), textAlign: TextAlign.center,),
                         onTap: () {
                           router.navigateTo(context, '/profilePic', transition: TransitionType.nativeModal);
                         },
@@ -304,27 +304,27 @@ class _SettingsPageState extends State<SettingsPage> {
               children: <Widget>[
                 new Container(
                   padding: EdgeInsets.all(16.0),
-                  child: new Text("General", style: TextStyle(color: Colors.blue, fontFamily: "Product Sans", fontWeight: FontWeight.bold),),
+                  child: new Text("General", style: TextStyle(color: mainColor, fontFamily: "Product Sans", fontWeight: FontWeight.bold),),
                 ),
                 new ListTile(
                   title: new Text("About", style: TextStyle(fontFamily: "Product Sans",)),
-                  trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                  trailing: new Icon(Icons.arrow_forward_ios, color: mainColor),
                   onTap: () {
                     router.navigateTo(context, '/aboutPage', transition: TransitionType.native);
                   },
                 ),
-                new Divider(height: 0.0, color: Colors.blue),
+                new Divider(height: 0.0, color: mainColor),
                 new ListTile(
                   title: new Text("Help", style: TextStyle(fontFamily: "Product Sans",)),
-                  trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                  trailing: new Icon(Icons.arrow_forward_ios, color: mainColor),
                   onTap: () {
                     launchHelpUrl();
                   },
                 ),
-                new Divider(height: 0.0, color: Colors.blue),
+                new Divider(height: 0.0, color: mainColor),
                 new ListTile(
                   title: new Text("Legal", style: TextStyle(fontFamily: "Product Sans",)),
-                  trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                  trailing: new Icon(Icons.arrow_forward_ios, color: mainColor),
                   onTap: () {
                     showLicensePage(
                       context: context,
@@ -338,12 +338,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     );
                   }
                 ),
-                new Divider(height: 0.0, color: Colors.blue),
+                new Divider(height: 0.0, color: mainColor),
                 new ListTile(
                   title: new Text("Sign Out", style: TextStyle(color: Colors.red, fontFamily: "Product Sans"),),
                   onTap: signOutBottomSheetMenu,
                 ),
-                new Divider(height: 0.0, color: Colors.blue),
+                new Divider(height: 0.0, color: mainColor),
                 new ListTile(
                   title: new Text("\nDelete Account\n", style: TextStyle(color: Colors.red, fontFamily: "Product Sans"),),
                   subtitle: new Text("Deleting your VC DECA Account will remove all the data linked to your account as well. You will be required to create a new account in order to sign in again.\n", style: TextStyle(fontSize: 12.0, fontFamily: "Product Sans")),
@@ -359,7 +359,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: <Widget>[
                 new Container(
                   padding: EdgeInsets.all(16.0),
-                  child: new Text("Preferences", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),),
+                  child: new Text("Preferences", style: TextStyle(color: mainColor, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),),
                 ),
                 new SwitchListTile(
                   title: new Text("Push Notifications", style: TextStyle(fontFamily: "Product Sans",)),
@@ -370,7 +370,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     });
                   },
                 ),
-                new Divider(height: 0.0, color: Colors.blue),
+                new Divider(height: 0.0, color: mainColor),
                 new SwitchListTile(
                   title: new Text("Chat Notifications", style: TextStyle(fontFamily: "Product Sans",)),
                   value: chatNotifications,
@@ -380,7 +380,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     });
                   },
                 ),
-//                new Divider(height: 0.0, color: Colors.blue),
+//                new Divider(height: 0.0, color: mainColor),
 //                new SwitchListTile(
 //                  title: new Text("Dark Mode", style: TextStyle(fontFamily: "Product Sans",)),
 //                  value: darkMode,
@@ -401,24 +401,24 @@ class _SettingsPageState extends State<SettingsPage> {
               children: <Widget>[
                 new Container(
                   padding: EdgeInsets.all(16.0),
-                  child: new Text("Feedback", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),),
+                  child: new Text("Feedback", style: TextStyle(color: mainColor, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),),
                 ),
                 new ListTile(
                   title: new Text("Provide Feedback", style: TextStyle(fontFamily: "Product Sans",)),
-                  trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                  trailing: new Icon(Icons.arrow_forward_ios, color: mainColor),
                   onTap: () {
                     launchFeedbackUrl();
                   },
                 ),
-                new Divider(height: 0.0, color: Colors.blue),
+                new Divider(height: 0.0, color: mainColor),
                 new ListTile(
                   title: new Text("Report a Bug", style: TextStyle(fontFamily: "Product Sans",)),
-                  trailing: new Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                  trailing: new Icon(Icons.arrow_forward_ios, color: mainColor),
                   onTap: () {
                     launchBugReportUrl();
                   },
                 ),
-                new Divider(height: 0.0, color: Colors.blue),
+                new Divider(height: 0.0, color: mainColor),
               ],
             ),
           ),
@@ -433,7 +433,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: <Widget>[
                       new Container(
                         padding: EdgeInsets.all(16.0),
-                        child: new Text("Developer", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),),
+                        child: new Text("Developer", style: TextStyle(color: mainColor, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),),
                       ),
                       new ListTile(
                         leading: new Icon(Icons.developer_mode),

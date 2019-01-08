@@ -203,7 +203,9 @@ class _TabBarControllerState extends State<TabBarController> {
                 if (newGroupCode != "" && newChaperoneName != "") {
                   databaseRef.child("chat").child(newGroupCode).push().update({
                     "author": "GroupCreatorBot",
-                    "message": "Welcome to $newChaperoneName's chaperone group!"
+                    "message": "Welcome to $newChaperoneName's chaperone group!",
+                    "date": "N/A",
+                    "role": "Bot"
                   });
                   Navigator.of(context).pop();
                 }
@@ -243,7 +245,7 @@ class _TabBarControllerState extends State<TabBarController> {
         title = "Chat";
         if (role == "Admin") {
           currentTabButton = new FloatingActionButton(
-            backgroundColor: Colors.blue,
+            backgroundColor: mainColor,
             child: Icon(Icons.group_add),
             onPressed: createGroupDialog,
           );
@@ -254,9 +256,9 @@ class _TabBarControllerState extends State<TabBarController> {
       }
       else {
         title = "VC DECA";
-        if (role != "Member") {
+        if (role == "Admin" || role == "Officer") {
           currentTabButton = new FloatingActionButton(
-            backgroundColor: Colors.blue,
+            backgroundColor: mainColor,
             child: Icon(Icons.add),
             onPressed: addAlertDialog,
           );
@@ -341,7 +343,7 @@ class _TabBarControllerState extends State<TabBarController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: mainColor,
           title: new Text(title),
           textTheme: TextTheme(
             title: TextStyle(
@@ -355,25 +357,25 @@ class _TabBarControllerState extends State<TabBarController> {
         floatingActionButton: currentButton,
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          fixedColor: Colors.blue,
+          fixedColor: mainColor,
           currentIndex: currentTab,
           onTap: tabTapped,
           items: [
             new BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                title: Text("Home", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
+                title: Text("Home", style: TextStyle(fontFamily: "Product Sans", fontSize: 13.0))),
             new BottomNavigationBarItem(
                 icon: Icon(Icons.group),
-                title: Text("Conferences", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
+                title: Text("Conferences", style: TextStyle(fontFamily: "Product Sans", fontSize: 13.0))),
             new BottomNavigationBarItem(
                 icon: Icon(Icons.event),
-                title: Text("Events", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
+                title: Text("Events", style: TextStyle(fontFamily: "Product Sans", fontSize: 13.0))),
             new BottomNavigationBarItem(
                 icon: Icon(Icons.chat),
-                title: Text("Chat", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
+                title: Text("Chat", style: TextStyle(fontFamily: "Product Sans", fontSize: 13.0))),
             new BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
-                title: Text("Settings", style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0))),
+                title: Text("Settings", style: TextStyle(fontFamily: "Product Sans", fontSize: 13.0))),
           ],
         ),
         drawer: Drawer(

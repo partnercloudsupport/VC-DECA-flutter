@@ -159,7 +159,7 @@ class _MyDecaPageState extends State<MyDecaPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("myDECA"),
         textTheme: TextTheme(
             title: TextStyle(

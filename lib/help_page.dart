@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'user_info.dart';
 
 class HelpPage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _HelpPageState extends State<HelpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("Help"),
         textTheme: TextTheme(
             title: TextStyle(

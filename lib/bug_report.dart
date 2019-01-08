@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'user_info.dart';
 
 class BugReportPage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _BugReportPageState extends State<BugReportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: mainColor,
         title: new Text("Report a Bug"),
         textTheme: TextTheme(
             title: TextStyle(
