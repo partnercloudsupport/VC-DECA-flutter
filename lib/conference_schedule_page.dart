@@ -48,7 +48,9 @@ class _ConferenceSchedulePageState extends State<ConferenceSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container (
+    return Container(
+      color: Colors.white,
+      padding: new EdgeInsets.all(16.0),
       child: new Stack(
         children: <Widget>[
           new Container(
@@ -79,33 +81,46 @@ class _ConferenceSchedulePageState extends State<ConferenceSchedulePage> {
                         new Container(
                             child: new Text(
                               eventList[index].eventTime,
-                              style: TextStyle(fontFamily: "Product Sans", color: eventColor, fontSize: 17.0, fontWeight: FontWeight.bold),
+                              style: TextStyle(color: eventColor, fontSize: 17.0, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),
                             )
                         ),
                         new Padding(padding: EdgeInsets.all(5.0)),
                         new Column(
                           children: <Widget>[
                             new Container(
-//                                        width: MediaQuery.of(context).size.width - 185,
+                              width: MediaQuery.of(context).size.width - 178,
                               child: new Text(
                                 eventList[index].eventDesc,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                  fontSize: 18.0,
                                   fontFamily: "Product Sans",
+                                  fontSize: 17.0,
                                   fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            new Container(
+                              width: MediaQuery.of(context).size.width - 178,
+                              child: new Text(
+                                eventList[index].eventLocation,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontFamily: "Product Sans",
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.grey
                                 ),
                               ),
                             ),
                           ],
                         ),
-//                                  new Padding(padding: EdgeInsets.all(5.0)),
-//                                  new Container(
-//                                      child: new Icon(
-//                                        Icons.arrow_forward_ios,
-//                                        color: eventColor,
-//                                      )
-//                                  ),
+                        new Padding(padding: EdgeInsets.all(5.0)),
+                        new Container(
+                            child: new Icon(
+                              Icons.arrow_forward_ios,
+                              color: eventColor,
+                            )
+                        ),
                       ],
                     ),
                   ),
