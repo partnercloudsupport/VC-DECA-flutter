@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:vc_deca_flutter/conference_schedule_page.dart';
 import 'conference_media_page.dart';
 import 'user_info.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -48,6 +49,7 @@ class _ConferenceViewPageState extends State<ConferenceViewPage> {
               ),
               Tab(text: "MEDIA"),
             ],
+            indicatorColor: Colors.white,
           ),
           title: new Text(selectedYear.split(" ")[1]),
           centerTitle: true,
@@ -60,7 +62,7 @@ class _ConferenceViewPageState extends State<ConferenceViewPage> {
         body: TabBarView(
           children: [
             new ConferenceOverview(),
-            Center(child: Text("Coming Soon...")),
+            new ConferenceSchedulePage(),
             new ConferenceMediaPage()
           ],
         ),
