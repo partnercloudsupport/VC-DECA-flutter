@@ -29,6 +29,8 @@ String selectedCategory = "";
 String selectedEvent = "";
 String selectedType = "";
 
+String selectedAgenda = "";
+
 Color eventColor = const Color(0xFF0073CE);
 Color mainColor = const Color(0xFF0073CE);
 

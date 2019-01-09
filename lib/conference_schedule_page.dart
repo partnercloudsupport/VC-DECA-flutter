@@ -71,7 +71,10 @@ class _ConferenceSchedulePageState extends State<ConferenceSchedulePage> {
             itemCount: eventList.length,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  selectedAgenda = eventList[index].key;
+                  router.navigateTo(context, '/conferenceScheduleView', transition: TransitionType.native);
+                },
                 child: new Card(
                   child: new Container(
                     padding: EdgeInsets.all(16.0),

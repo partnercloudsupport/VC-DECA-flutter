@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
+import 'conference_schedule_view_page.dart';
 import 'network_check_again.dart';
 import 'user_info.dart';
 import 'package:flutter/material.dart';
@@ -120,6 +121,10 @@ void main() {
 
   router.define('/compEventSite', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new CompetitiveEventsPage();
+  }));
+
+  router.define('/conferenceScheduleView', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new ConferenceScheduleViewPage();
   }));
 
   runApp(new MaterialApp(
