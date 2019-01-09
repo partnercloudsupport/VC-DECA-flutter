@@ -9,7 +9,8 @@ class ConferenceScheduleViewPage extends StatefulWidget {
 
 class _ConferenceScheduleViewPageState extends State<ConferenceScheduleViewPage> {
 
-  String desc = "";
+  String title = "";
+  String desc = "No Description";
   String time = "";
   String endTime = "";
   String location = "";
@@ -20,6 +21,7 @@ class _ConferenceScheduleViewPageState extends State<ConferenceScheduleViewPage>
   _ConferenceScheduleViewPageState() {
     databaseRef.child("conferences").child(selectedYear).child("agenda").child(selectedAgenda).once().then((DataSnapshot snapshot) {
       setState(() {
+        title = snapshot.value["title"];
         desc = snapshot.value["desc"];
         time = snapshot.value["time"];
         endTime = snapshot.value["endTime"];
@@ -34,7 +36,7 @@ class _ConferenceScheduleViewPageState extends State<ConferenceScheduleViewPage>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mainColor,
-        title: new Text(desc),
+        title: new Text(""),
         centerTitle: true,
         textTheme: TextTheme(
             title: TextStyle(
@@ -44,29 +46,53 @@ class _ConferenceScheduleViewPageState extends State<ConferenceScheduleViewPage>
         ),
       ),
       body: new Container(
+        padding: EdgeInsets.all(16.0),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         color: Colors.white,
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             new Text(
-              desc,
-              style: new TextStyle(fontFamily: "Product Sans"),
+              title,
+              style: TextStyle(
+                fontFamily: "Product Sans",
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 25.0,
+              ),
+              textAlign: TextAlign.left,
             ),
+            new Padding(padding: EdgeInsets.all(4.0)),
             new Text(
-              date,
-              style: new TextStyle(fontFamily: "Product Sans"),
+              "$time - $endTime",
+              style: TextStyle(
+                fontFamily: "Product Sans",
+                fontWeight: FontWeight.normal,
+                fontStyle: FontStyle.normal,
+                color: mainColor,
+                fontSize: 20.0,
+              ),
             ),
-            new Text(
-              time,
-              style: new TextStyle(fontFamily: "Product Sans"),
-            ),
-            new Text(
-              endTime,
-              style: new TextStyle(fontFamily: "Product Sans"),
-            ),
+            new Padding(padding: EdgeInsets.all(4.0)),
             new Text(
               location,
-              style: new TextStyle(fontFamily: "Product Sans"),
+              style: TextStyle(
+                fontFamily: "Product Sans",
+                fontWeight: FontWeight.normal,
+                fontStyle: FontStyle.italic,
+                color: mainColor,
+                fontSize: 18.0,
+              ),
+            ),
+            new Padding(padding: EdgeInsets.all(8.0)),
+            new Text(
+              desc,
+              style: TextStyle(
+                fontFamily: "Product Sans",
+                fontWeight: FontWeight.normal,
+                fontSize: 18.0,
+              ),
             ),
           ],
         ),

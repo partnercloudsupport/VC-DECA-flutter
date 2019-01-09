@@ -15,6 +15,7 @@ class EventListing {
   String eventEndTime;
   String eventLocation;
   String eventDesc;
+  String eventTitle;
   String eventDate;
 
   EventListing.fromSnapshot(DataSnapshot snapshot)
@@ -23,6 +24,7 @@ class EventListing {
         eventEndTime = snapshot.value["endTime"].toString(),
         eventDate = snapshot.value["date"].toString(),
         eventDesc = snapshot.value["desc"].toString(),
+        eventTitle = snapshot.value["title"].toString(),
         eventLocation = snapshot.value["location"].toString();
 }
 
@@ -60,7 +62,7 @@ class _ConferenceSchedulePageState extends State<ConferenceSchedulePage> {
                   backdrop,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: eventColor,
+                    color: mainColor,
                     fontSize: 13.0,
                     fontFamily: "Product Sans",
                   ),
@@ -84,16 +86,16 @@ class _ConferenceSchedulePageState extends State<ConferenceSchedulePage> {
                         new Container(
                             child: new Text(
                               eventList[index].eventTime,
-                              style: TextStyle(color: eventColor, fontSize: 17.0, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),
+                              style: TextStyle(color: mainColor, fontSize: 17.0, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),
                             )
                         ),
                         new Padding(padding: EdgeInsets.all(5.0)),
                         new Column(
                           children: <Widget>[
                             new Container(
-                              width: MediaQuery.of(context).size.width - 178,
+                              width: MediaQuery.of(context).size.width - 185,
                               child: new Text(
-                                eventList[index].eventDesc,
+                                eventList[index].eventTitle,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontFamily: "Product Sans",
@@ -103,7 +105,7 @@ class _ConferenceSchedulePageState extends State<ConferenceSchedulePage> {
                               ),
                             ),
                             new Container(
-                              width: MediaQuery.of(context).size.width - 178,
+                              width: MediaQuery.of(context).size.width - 185,
                               child: new Text(
                                 eventList[index].eventLocation,
                                 textAlign: TextAlign.start,
@@ -117,12 +119,11 @@ class _ConferenceSchedulePageState extends State<ConferenceSchedulePage> {
                             ),
                           ],
                         ),
-                        new Padding(padding: EdgeInsets.all(5.0)),
                         new Container(
                             child: new Icon(
                               Icons.arrow_forward_ios,
-                              color: eventColor,
-                            )
+                              color: mainColor,
+                            ),
                         ),
                       ],
                     ),
