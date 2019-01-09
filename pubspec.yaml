@@ -83,6 +83,9 @@ flutter:
     - images/full_white_trans.png
     - images/skin_vcdeca_blue.png
     - images/skin_vcdeca_white.png
+    - images/online.png
+    - images/written.png
+    - images/roleplay.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

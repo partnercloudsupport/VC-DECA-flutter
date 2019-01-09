@@ -35,18 +35,18 @@ class _EventPageState extends State<EventPage> {
   
   Widget getLeadingPic(String name) {
     String imagePath = "";
-    if (name == "Business Management") {
-        imagePath = 'images/business.png';
+    if (name == "Online") {
+        imagePath = 'images/online.png';
     }
-    else if (name == "Entrepreneurship") {
-      imagePath = 'images/entrepreneurship.png';
+    else if (name == "Roleplay") {
+      imagePath = 'images/roleplay.png';
     }
-    else if (name == "Finance") {
-      imagePath = 'images/finance.png';
+    else if (name == "Written") {
+      imagePath = 'images/written.png';
     }
     return Image.asset(
       imagePath,
-      height: 35.0,
+      height: 200.0,
     );
   }
 
@@ -62,36 +62,20 @@ class _EventPageState extends State<EventPage> {
             style: TextStyle(fontFamily: "Product Sans", fontSize: 15.0)
           ),
           new Expanded(
-            child: new ListView.builder(
-              itemCount: eventList.length,
-              itemBuilder: (BuildContext context, int index) {
+            child: new GridView.count(
+              crossAxisCount: 2,
+              children: List.generate(eventList.length, (int index) {
                 return new Container(
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new ListTile(
-                        onTap: () {
-                          selectedType = eventList[index].key;
-                          print(selectedType);
-                          router.navigateTo(context, '/eventCluster', transition: TransitionType.native);
-                        },
-                        leading: getLeadingPic(eventList[index].key),
-                        title: new Text(
-                            eventList[index].key,
-                            style: TextStyle(
-                              fontFamily: "Product Sans",
-                            ),
-                        ),
-                        trailing: Icon(Icons.arrow_forward_ios, color: mainColor,),
-                      ),
-                      new Divider(
-                        height: 8.0,
-                        color: mainColor,
-                      ),
-                    ],
-                  ),
+                    child: new GestureDetector(
+                      onTap: () {
+                        selectedType = eventList[index].key;
+                        print(selectedType);
+                        router.navigateTo(context, '/eventCluster', transition: TransitionType.native);
+                      },
+                      child: getLeadingPic(eventList[index].key),
+                    ),
                 );
-              },
+              }),
             ),
           )
         ],
