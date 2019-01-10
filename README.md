@@ -23,6 +23,10 @@ Go ahead and download the repository.
 
 Open up the entire folder in your favorite IDE. I would recommend IntelliJ IDEA or VS Code as they are fully supported to run and develop Flutter applications.
 
+Run the following terminal command in the main project folder.
+
+`$ flutter packages get`
+
 ***Note: If you are using IntelliJ or VS Code, make sure you have the Dart and Flutter plugins installed!***
 
 If you are being going to run the iOS version, make sure to open `Runner.xcworkspace` from the `ios` folder with Xcode and set the development team.
