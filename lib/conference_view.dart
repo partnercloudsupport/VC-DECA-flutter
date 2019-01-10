@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:vc_deca_flutter/conference_schedule_page.dart';
+import 'package:vc_deca_flutter/conference_winners_page.dart';
 import 'conference_media_page.dart';
 import 'user_info.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -36,10 +37,11 @@ class _ConferenceViewPageState extends State<ConferenceViewPage> {
 
   Widget build(BuildContext context) {
     return new DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
+            isScrollable: true,
             tabs: [
               Tab(
                 text: "OVERVIEW",
@@ -47,7 +49,12 @@ class _ConferenceViewPageState extends State<ConferenceViewPage> {
               Tab(
                 text: "SCHEDULE",
               ),
-              Tab(text: "MEDIA"),
+              Tab(
+                text: "WINNERS",
+              ),
+              Tab(
+                text: "MEDIA"
+              ),
             ],
             indicatorColor: Colors.white,
           ),
@@ -63,6 +70,7 @@ class _ConferenceViewPageState extends State<ConferenceViewPage> {
           children: [
             new ConferenceOverview(),
             new ConferenceSchedulePage(),
+            new ConferenceWinnerPage(),
             new ConferenceMediaPage()
           ],
         ),
