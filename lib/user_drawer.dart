@@ -30,11 +30,11 @@ class _UserDrawerState extends State<UserDrawer> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new ListTile(
-                  title: new Text('Are you sure you want to sign out?'),
+                  title: new Text('Are you sure you want to sign out?', style: TextStyle(fontFamily: "Product Sans"),),
                 ),
                 new ListTile(
                   leading: new Icon(Icons.check),
-                  title: new Text('Yes, sign me out!'),
+                  title: new Text('Yes, sign me out!', style: TextStyle(fontFamily: "Product Sans")),
                   onTap: () {
                     name = "";
                     email = "";
@@ -58,7 +58,7 @@ class _UserDrawerState extends State<UserDrawer> {
                 ),
                 new ListTile(
                   leading: new Icon(Icons.clear),
-                  title: new Text('Cancel'),
+                  title: new Text('Cancel', style: TextStyle(fontFamily: "Product Sans")),
                   onTap: () {
                     router.pop(context);
                   },
@@ -76,8 +76,10 @@ class _UserDrawerState extends State<UserDrawer> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: new SafeArea(
         child: Container(
+          color: Colors.white,
           height: 200.0,
           padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
           child: new Column(
@@ -148,19 +150,31 @@ class _UserDrawerState extends State<UserDrawer> {
                   ],
                 )
             ),
-            new Container(
-              padding: EdgeInsets.all(8.0),
-              child: new Column(
-                children: <Widget>[
-                  new ListTile(
-                    title: new Text(email, style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
-                    leading: Icon(Icons.email),
-                  ),
-                  new ListTile(
-                    title: new Text(role, style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
-                    leading: Icon(Icons.verified_user),
-                  ),
-                ],
+            new Expanded(
+              child: new Container(
+                color: Colors.white,
+                padding: EdgeInsets.all(8.0),
+                child: new Column(
+                  children: <Widget>[
+                    new ListTile(
+                      title: new Text(email, style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
+                      leading: Icon(Icons.email),
+                    ),
+                    new ListTile(
+                      title: new Text(role, style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
+                      leading: Icon(Icons.verified_user),
+                    ),
+                    new ListTile(
+                      title: new Text("myDECA", style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
+                      leading: Icon(Icons.person),
+                      onTap: () async {
+                        router.pop(context);
+                        await new Future.delayed(const Duration(milliseconds: 10));
+                        router.navigateTo(context, '/myDECA', transition: TransitionType.native);
+                      },
+                    ),
+                  ],
+                ),
               ),
             )
           ],

@@ -38,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new ListTile(
-                  title: new Text('Are you sure you want to sign out?'),
+                  title: new Text('Are you sure you want to sign out?', style: TextStyle(fontFamily: "Product Sans")),
                 ),
                 new ListTile(
                   leading: new Icon(Icons.check),
@@ -66,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 new ListTile(
                   leading: new Icon(Icons.clear),
-                  title: new Text('Cancel'),
+                  title: new Text('Cancel', style: TextStyle(fontFamily: "Product Sans")),
                   onTap: () {
                     router.pop(context);
                   },
@@ -78,55 +78,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           );
         }
-    );
-  }
-
-  void changeProfileDialog(String change) {
-    String input = "";
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Add Time Listing"),
-          content: new Container(
-            width: 1000.0,
-            child: new SingleChildScrollView(
-                child: new Column(
-                  children: <Widget>[
-                    new TextField(
-                      textCapitalization: TextCapitalization.characters,
-                      decoration: InputDecoration(
-                          labelText: "Update $change",
-                      ),
-                      onChanged: (String input) {
-                        name = input;
-                      },
-                    ),
-                  ],
-                )
-            ),
-          ),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("UPDATE"),
-              onPressed: () {
-                // Update database here
-                if (name != "") {
-                  databaseRef.child("eventsList").push().set(name);
-                }
-              },
-            ),
-            new FlatButton(
-              child: new Text("CANCEL"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
-        );
-      },
     );
   }
 
@@ -190,7 +141,7 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new ListTile(
-                  title: new Text('Are you sure you want to delete your VC DECA Account?'),
+                  title: new Text('Are you sure you want to delete your VC DECA Account?', style: TextStyle(fontFamily: "Product Sans")),
                 ),
                 new ListTile(
                   leading: new Icon(Icons.check),
@@ -202,7 +153,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 new ListTile(
                   leading: new Icon(Icons.clear),
-                  title: new Text('Cancel'),
+                  title: new Text('Cancel', style: TextStyle(fontFamily: "Product Sans")),
                   onTap: () {
                     router.pop(context);
                   },
