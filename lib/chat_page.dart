@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'user_info.dart';
+import 'dart:async';
 import 'package:fluro/fluro.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -15,6 +16,8 @@ class _ChatPageState extends State<ChatPage> {
   var _visible = false;
 
   String joinGroup = "";
+  
+  final errorSnackbar = new SnackBar(content: Text("It looks like that chaperone group doesn't exist!", style: TextStyle(fontFamily: "Product Sans"),));
 
   void toOfficerChat() {
     chatTitle = "Officers";
@@ -34,7 +37,7 @@ class _ChatPageState extends State<ChatPage> {
       joinGroupDialog();
     }
   }
-
+  
   void joinGroupDialog() {
     joinGroup = "";
     // flutter defined function

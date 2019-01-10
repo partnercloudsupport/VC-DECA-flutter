@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:date_format/date_format.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_page.dart';
@@ -60,68 +61,7 @@ class _TabBarControllerState extends State<TabBarController> {
   }
 
   void addAlertDialog() {
-    newAlertBody = "";
-    newAlertTitle = "";
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Create New Announcement"),
-          content: new Container(
-            height: 200.0,
-            width: 1000.0,
-            child: new Column(
-              children: <Widget>[
-                new TextField(
-                  onChanged: alertTitleText,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(
-                      labelText: "Announcement Title",
-                      hintText: "Enter announcement title"
-                  ),
-                ),
-                new TextField(
-                  onChanged: alertBodyText,
-                  maxLines: null,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: InputDecoration(
-                      labelText: "Announcement Body",
-                      hintText: "Enter announcement body"
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("CREATE"),
-              onPressed: () {
-                if (newAlertTitle != "" && newAlertBody != "") {
-                  databaseRef.child("alerts").push().update({
-                    "title": newAlertTitle,
-                    "body": newAlertBody,
-                    "date": formatDate(DateTime.now(), [dd, '/', mm, '/', yyyy, ' ', HH, ':', nn])
-                  });
-                  newAlertBody = "";
-                  newAlertTitle = "";
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-            new FlatButton(
-              child: new Text("CANCEL"),
-              onPressed: () {
-                newAlertBody = "";
-                newAlertTitle = "";
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    router.navigateTo(context, '/newAlert', transition: TransitionType.nativeModal);
   }
 
   void serverUpdateDialog() {

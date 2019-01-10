@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:vc_deca_flutter/new_alert_page.dart';
 import 'conference_schedule_view_page.dart';
 import 'network_check_again.dart';
 import 'user_info.dart';
@@ -37,6 +38,10 @@ void main() {
 
   router.define('/alert', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new AlertPage();
+  }));
+
+  router.define('/newAlert', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new NewAlertPage();
   }));
 
   router.define('/checkAuth', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
