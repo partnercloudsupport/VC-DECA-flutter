@@ -38,22 +38,23 @@ Running the android version shouldn't require any additional setup as long as yo
 If you would like to contribute to this repository or provide feedback, check out the guidelines [here](https://github.com/BK1031/VC-DECA-flutter/wiki/Contributing).
 
 #### Contributors
-- Bharat Kathi
+- [Bharat Kathi](https://github.com/BK1031)
     - App Development
-- Myron Chan
+- [Myron Chan](https://github.com/MC1217)
     - UI/UX Design
     - Icon Design
-- Ian Lau
+- [Ian Lau](https://www.instagram.com/chickian03/?hl=en)
     - Marketing
-- Kashyap Chaturvedula
+- [Andrew Zhang](https://github.com/azhang11)
+    - Documentation
+- [Kashyap Chaturvedula](https://github.com/Kashyap456)
     - Moral Support
 
 #### Beta Testers
 
-- Andrew Zhang
-- Thomas Liang
+- [Thomas Liang](https://github.com/ThomasLiang123)
 - Micah Kim
-- Yaseem cant spellhis last name lul
+- Yaseen Elashmawi
 - Amber Lao
 
 ## License
