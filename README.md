@@ -45,12 +45,16 @@ If you would like to contribute to this repository or provide feedback, check ou
     - Icon Design
 - Ian Lau
     - Marketing
+- Kashyap Chaturvedula
+    - Moral Support
 
 #### Beta Testers
 
 - Andrew Zhang
 - Thomas Liang
-- Kashyap Chaturvedula
+- Micah Kim
+- Yaseem cant spellhis last name lul
+- Amber Lao
 
 ## License
 
