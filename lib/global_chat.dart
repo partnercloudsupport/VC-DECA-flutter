@@ -37,10 +37,10 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
 
   final databaseRef = FirebaseDatabase.instance.reference();
   final storageRef = FirebaseStorage.instance.ref();
-  final myController = TextEditingController();
+  final myController = new TextEditingController();
+  FocusNode myFocusNode = new FocusNode();
   ScrollController _scrollController = new ScrollController();
   List<ChatMessage> messageList = new List();
-  var listSize;
   bool _visible = false;
 
   _GlobalChatPageState() {
@@ -62,26 +62,6 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
     );
   }
 
-  onMessageDeletion(Event event) {
-    var oldValue =
-    messageList.singleWhere((entry) => entry.key == event.snapshot.key);
-    setState(() {
-      messageList.removeAt(messageList.indexOf(oldValue));
-    });
-  }
-
-  Future onMessageType(String input) async {
-    setState(() {
-      listSize = MediaQuery.of(context).size.height - (MediaQuery.of(context).size.height / 1.5);
-    });
-    await new Future.delayed(const Duration(milliseconds: 300));
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
-  }
-
   void sendMessage(String input) {
     if (input != "" && input != " ") {
       databaseRef.child("chat").child(selectedChat).push().update({
@@ -91,15 +71,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
         "role": role
       });
     }
-    setState(() {
-      listSize = MediaQuery.of(context).size.height - (MediaQuery.of(context).size.height / 4);
-    });
     myController.clear();
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent + 10,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
   }
 
   Color getColor(String authorRole, String messageAuthor) {
@@ -129,10 +101,21 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
     }
   }
 
+  Future<Null> focusNodeListener() async {
+    if (myFocusNode.hasFocus) {
+      await Future.delayed(const Duration(milliseconds: 100));
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent + 10.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    listSize = 500.0;
+    myFocusNode.addListener(focusNodeListener);
   }
 
   @override
@@ -149,111 +132,117 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
             )
         ),
       ),
-      backgroundColor: Colors.white,
-      floatingActionButton: new Container(
-        color: Colors.white,
-        height: 100.0,
-        padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32.0),
-        child: new TextField(
-          controller: myController,
-          autocorrect: true,
-          textInputAction: TextInputAction.send,
-          textCapitalization: TextCapitalization.sentences,
-          style: TextStyle(fontFamily: "Product Sans", color: Colors.black, fontSize: 16.0),
-          onSubmitted: sendMessage,
-          onChanged: onMessageType,
-          decoration: InputDecoration(
-            labelStyle: TextStyle(fontFamily: "Product Sans",),
-            hintStyle: TextStyle(fontFamily: "Product Sans",),
-            labelText: "Enter Message",
-            hintText: "Type a new message to send"
-          ),
-        ),
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: new SafeArea(
-        child: new Container(
-          padding: EdgeInsets.all(8.0),
-          color: Colors.white,
-          height: listSize,
-//          padding: EdgeInsets.all(16.0),
-          child: new ListView.builder(
-            itemCount: messageList.length,
-            controller: _scrollController,
-            itemBuilder: (BuildContext context, int index) {
-              return new Slidable(
-                delegate: new SlidableDrawerDelegate(),
-                child: new Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10.0),
-                  padding: EdgeInsets.all(8.0),
-                  decoration: new BoxDecoration(
-                    border: new Border(
-                      left: new BorderSide(
-                        color: getColor(messageList[index].authorRole, messageList[index].author),
-                        width: 3.0,
-                      )
-                    ),
-                  ),
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Row(
-                        children: <Widget>[
-                          new Text(
-                            messageList[index].author,
-                            style: TextStyle(
-                                fontFamily: "Product Sans",
-                                color: getColor(messageList[index].authorRole, messageList[index].author),
-                                fontSize: 16.0
-                            ),
+        child: Column(
+          children: <Widget>[
+            new Expanded(
+              child: new Container(
+                padding: EdgeInsets.all(8.0),
+                color: Colors.white,
+                child: new ListView.builder(
+                  itemCount: messageList.length,
+                  controller: _scrollController,
+                  itemBuilder: (BuildContext context, int index) {
+                    return new Slidable(
+                      delegate: new SlidableDrawerDelegate(),
+                      child: new Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
+                        padding: EdgeInsets.all(8.0),
+                        decoration: new BoxDecoration(
+                          border: new Border(
+                            left: new BorderSide(
+                              color: getColor(messageList[index].authorRole, messageList[index].author),
+                              width: 3.0,
+                            )
                           ),
-                          new Padding(padding: EdgeInsets.all(4.0)),
-                          new Visibility(
-                            visible: getVisibility(messageList[index].authorRole, messageList[index].author),
-                            child: new Card(
-                                color: getColor(messageList[index].authorRole, messageList[index].author),
-                                child: new Container(
-                                  padding: EdgeInsets.all(4.0),
-                                  child: new Text(
-                                    messageList[index].authorRole,
-                                    style: TextStyle(
-                                        fontFamily: "Product Sans",
-                                        color: Colors.white,
-                                        fontSize: 16.0
-                                    ),
+                        ),
+                        child: new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new Row(
+                              children: <Widget>[
+                                new Text(
+                                  messageList[index].author,
+                                  style: TextStyle(
+                                      fontFamily: "Product Sans",
+                                      color: getColor(messageList[index].authorRole, messageList[index].author),
+                                      fontSize: 16.0
+                                  ),
+                                ),
+                                new Padding(padding: EdgeInsets.all(4.0)),
+                                new Visibility(
+                                  visible: getVisibility(messageList[index].authorRole, messageList[index].author),
+                                  child: new Card(
+                                      color: getColor(messageList[index].authorRole, messageList[index].author),
+                                      child: new Container(
+                                        padding: EdgeInsets.all(4.0),
+                                        child: new Text(
+                                          messageList[index].authorRole,
+                                          style: TextStyle(
+                                              fontFamily: "Product Sans",
+                                              color: Colors.white,
+                                              fontSize: 16.0
+                                          ),
+                                        ),
+                                      )
                                   ),
                                 )
+                              ],
                             ),
-                          )
-                        ],
+                            new Text(
+                              messageList[index].message,
+                              style: TextStyle(
+                                  fontFamily: "Product Sans",
+                                  color: Colors.black,
+                                  fontSize: 16.0
+                              ),
+                            ),
+                          ],
+                        )
                       ),
-                      new Text(
-                        messageList[index].message,
-                        style: TextStyle(
-                            fontFamily: "Product Sans",
-                            color: Colors.black,
-                            fontSize: 16.0
-                        ),
-                      ),
-                    ],
-                  )
+                      secondaryActions: <Widget>[
+                        new Visibility(
+                          visible: _visible,
+                          child: new IconSlideAction(
+                            icon: Icons.clear,
+                            caption: "Delete",
+                            color: Colors.red,
+                            onTap: () {
+                              setState(() {
+                                databaseRef.child("chat").child(selectedChat).child(messageList[index].key).remove();
+                                messageList.removeAt(index);
+                              });
+                            },
+                          ),
+                        )
+                      ],
+                    );
+                  },
                 ),
-                secondaryActions: <Widget>[
-                  new Visibility(
-                    visible: _visible,
-                    child: new IconSlideAction(
-                      icon: Icons.clear,
-                      caption: "Delete",
-                      color: Colors.red,
-                      onTap: () {
-                        databaseRef.child("chat").child(selectedChat).child(messageList[index].key).remove();
-                      },
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
+              ),
+            ),
+            new ListTile(
+              title: Container(
+                height: 75.0,
+                child: new TextField(
+                  controller: myController,
+                  focusNode: myFocusNode,
+                  autocorrect: true,
+                  textInputAction: TextInputAction.send,
+                  textCapitalization: TextCapitalization.sentences,
+                  style: TextStyle(fontFamily: "Product Sans", color: Colors.black, fontSize: 16.0),
+                  onSubmitted: sendMessage,
+                  decoration: InputDecoration(
+                      labelStyle: TextStyle(fontFamily: "Product Sans",),
+                      hintStyle: TextStyle(fontFamily: "Product Sans",),
+                      labelText: "Enter Message",
+                      hintText: "Type a new message to send"
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
