@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final router = Router();
 
 double appVersion = 1.0;
-int appBuild = 22;
+int appBuild = 23;
 String appStatus = "";
 String appFull = "Version $appVersion";
 

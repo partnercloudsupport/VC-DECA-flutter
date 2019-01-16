@@ -256,6 +256,11 @@ class _TabBarControllerState extends State<TabBarController> {
         print("BETA APP!");
         appStatus = " Beta $appBuild";
       }
+      databaseRef.child("users").child(userID).update({
+        "appVersion": "$appVersion$appStatus",
+        "deviceName": Platform.localHostname,
+        "platform": Platform.operatingSystem
+      });
       _firebaseMessaging.subscribeToTopic("allDevices");
       print("All Devices Subscribed");
       if (role == "Officer" || role == "Admin") {

@@ -3,8 +3,10 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'user_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 class GlobalChatPage extends StatefulWidget {
   @override
@@ -191,8 +193,20 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
                                 )
                               ],
                             ),
-                            new Text(
-                              messageList[index].message,
+                            new Linkify(
+                              onOpen: (url) async {
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              text: messageList[index].message,
+                              linkStyle: TextStyle(
+                                  fontFamily: "Product Sans",
+                                  color: getColor(messageList[index].authorRole, messageList[index].author),
+                                  fontSize: 16.0
+                              ),
                               style: TextStyle(
                                   fontFamily: "Product Sans",
                                   color: Colors.black,

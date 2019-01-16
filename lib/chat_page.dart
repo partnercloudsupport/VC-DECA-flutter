@@ -226,7 +226,7 @@ class _ChatPageState extends State<ChatPage> {
                     mentorGroupID = newGroupCode;
                   });
                   databaseRef.child("users").child(userID).update({
-                    "group": mentorGroupID
+                    "mentorGroup": mentorGroupID
                   });
                   Navigator.of(context).pop();
                 }
@@ -253,11 +253,11 @@ class _ChatPageState extends State<ChatPage> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new ListTile(
-                  title: new Text('Are you sure you want to leave your chaperone group?'),
+                  title: new Text('Are you sure you want to leave your chaperone group?', style: TextStyle(fontFamily: "Product Sans"),),
                 ),
                 new ListTile(
                   leading: new Icon(Icons.check),
-                  title: new Text('Yeah, I wanna leave!'),
+                  title: new Text('Yeah, I wanna leave!', style: TextStyle(fontFamily: "Product Sans"),),
                   onTap: () {
                     setState(() {
                       chapGroupID = "Not in a Group";
@@ -268,7 +268,43 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 new ListTile(
                   leading: new Icon(Icons.clear),
-                  title: new Text('Cancel'),
+                  title: new Text('Cancel', style: TextStyle(fontFamily: "Product Sans"),),
+                  onTap: () {
+                    router.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+    );
+  }
+
+  void leaveMentorGroupBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (builder){
+          return SafeArea(
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  title: new Text('Are you sure you want to leave your mentor group?', style: TextStyle(fontFamily: "Product Sans"),),
+                ),
+                new ListTile(
+                  leading: new Icon(Icons.check),
+                  title: new Text('Yeah, I wanna leave!', style: TextStyle(fontFamily: "Product Sans"),),
+                  onTap: () {
+                    setState(() {
+                      mentorGroupID = "Not in a Group";
+                      databaseRef.child("users").child(userID).child("mentorGroup").set(chapGroupID);
+                      router.pop(context);
+                    });
+                  },
+                ),
+                new ListTile(
+                  leading: new Icon(Icons.clear),
+                  title: new Text('Cancel', style: TextStyle(fontFamily: "Product Sans"),),
                   onTap: () {
                     router.pop(context);
                   },
@@ -317,7 +353,7 @@ class _ChatPageState extends State<ChatPage> {
             subtitle: Text(chapGroupID, style: TextStyle(fontFamily: "Product Sans")),
             onTap: () {
               print("Entering Chaperone Chat");
-              toMentorChat();
+              toChaperoneChat();
             },
             onLongPress: () {
               if (chapGroupID != "Not in a Group") {
@@ -341,8 +377,8 @@ class _ChatPageState extends State<ChatPage> {
               toMentorChat();
             },
             onLongPress: () {
-              if (chapGroupID != "Not in a Group") {
-                leaveGroupBottomSheet();
+              if (chapGroupID != "Not in a Group" && role != "Officer") {
+                leaveMentorGroupBottomSheet();
               }
             },
             trailing: new Icon(

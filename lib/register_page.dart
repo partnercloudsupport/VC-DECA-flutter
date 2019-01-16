@@ -194,6 +194,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 onChanged: confirmField,
               ),
               new Padding(padding: EdgeInsets.all(8.0)),
+              new Text(
+                "By creating a VC DECA Account, you agree to our terms of service and privacy policy."
+              ),
+              new Padding(padding: EdgeInsets.all(8.0)),
               new RaisedButton(
                 child: buttonChild,
                 onPressed: register,
@@ -211,7 +215,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 splashColor: mainColor,
                 onPressed: () {
-                  router.navigateTo(context,'/toLogin', transition: TransitionType.inFromRight);
+                  router.navigateTo(context,'/toLogin', transition: TransitionType.fadeIn);
                 },
               )
             ],
