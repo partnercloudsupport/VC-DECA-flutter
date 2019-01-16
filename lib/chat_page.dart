@@ -37,6 +37,23 @@ class _ChatPageState extends State<ChatPage> {
       joinGroupDialog();
     }
   }
+
+  void toMentorChat() {
+    if (mentorGroupID != "Not in a Group") {
+      print("Already in a group!");
+      chatTitle = "Mentor Group";
+      selectedChat = mentorGroupID;
+      router.navigateTo(context, '/chat', transition: TransitionType.native);
+    }
+    else if (role == "Officer") {
+      print("Need to create a group!");
+      createMentorGroupDialog();
+    }
+    else {
+      print("Need to join a group!");
+      joinMentorGroupDialog();
+    }
+  }
   
   void joinGroupDialog() {
     joinGroup = "";
@@ -94,6 +111,130 @@ class _ChatPageState extends State<ChatPage> {
               child: new Text("CANCEL"),
               onPressed: () {
                 joinGroup = "";
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void joinMentorGroupDialog() {
+    joinGroup = "";
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Join Mentor Group", style: TextStyle(fontFamily: "Product Sans")),
+          content: new Container(
+            height: 75.0,
+            child: new Column(
+              children: <Widget>[
+                new TextField(
+                  onChanged: (String input) {
+                    joinGroup = input;
+                  },
+                  textCapitalization: TextCapitalization.characters,
+                  decoration: InputDecoration(
+                    labelText: "Group Code",
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("JOIN"),
+              onPressed: () {
+                if (joinGroup != "") {
+                  databaseRef.child("chat").child(joinGroup).once().then((DataSnapshot snapshot) {
+                    if (snapshot.value != null) {
+                      print("Group exists");
+                      setState(() {
+                        mentorGroupID = joinGroup;
+                      });
+                      databaseRef.child("users").child(userID).update({
+                        "mentorGroup": mentorGroupID
+                      });
+                      joinGroup = "";
+                      Navigator.of(context).pop();
+                    }
+                    else {
+                      print("Failed to find mentor group");
+                    }
+                  });
+                }
+                else {
+                  print("Failed to find mentor group");
+                }
+              },
+            ),
+            new FlatButton(
+              child: new Text("CANCEL"),
+              onPressed: () {
+                joinGroup = "";
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void createMentorGroupDialog() {
+    String newGroupCode = "";
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Create Your Mentor Group"),
+          content: new Container(
+            height: 150.0,
+            child: new Column(
+              children: <Widget>[
+                new TextField(
+                  onChanged: (String input) {
+                    newGroupCode = input;
+                  },
+                  textCapitalization: TextCapitalization.characters,
+                  decoration: InputDecoration(
+                      labelText: "Group Code",
+                      hintText: "Create a mentor group code"
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("CREATE"),
+              onPressed: () {
+                if (newGroupCode != "") {
+                  databaseRef.child("chat").child(newGroupCode).push().update({
+                    "author": "Group Creator",
+                    "message": "Welcome to $name's mentor group!",
+                    "date": "N/A",
+                    "role": "Bot"
+                  });
+                  setState(() {
+                    mentorGroupID = newGroupCode;
+                  });
+                  databaseRef.child("users").child(userID).update({
+                    "group": mentorGroupID
+                  });
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+            new FlatButton(
+              child: new Text("CANCEL"),
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
@@ -176,7 +317,28 @@ class _ChatPageState extends State<ChatPage> {
             subtitle: Text(chapGroupID, style: TextStyle(fontFamily: "Product Sans")),
             onTap: () {
               print("Entering Chaperone Chat");
-              toChaperoneChat();
+              toMentorChat();
+            },
+            onLongPress: () {
+              if (chapGroupID != "Not in a Group") {
+                leaveGroupBottomSheet();
+              }
+            },
+            trailing: new Icon(
+              Icons.arrow_forward_ios,
+              color: mainColor,
+            ),
+          ),
+          new Divider(
+            height: 0.0,
+            color: mainColor,
+          ),
+          new ListTile(
+            title: Text("Mentor Group", style: TextStyle(fontFamily: "Product Sans")),
+            subtitle: Text(mentorGroupID, style: TextStyle(fontFamily: "Product Sans")),
+            onTap: () {
+              print("Entering Mentor Chat");
+              toMentorChat();
             },
             onLongPress: () {
               if (chapGroupID != "Not in a Group") {

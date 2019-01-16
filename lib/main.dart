@@ -138,7 +138,7 @@ void main() {
     onGenerateRoute: router.generator,
     debugShowCheckedModeBanner: false,
     theme: new ThemeData(
-      primaryColor: mainColor
+      primaryColor: mainColor,
     ),
   ));
 }

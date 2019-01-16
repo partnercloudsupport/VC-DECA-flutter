@@ -67,6 +67,7 @@ class _LoginPage extends State<LoginPage> {
         role = userInfo["role"];
         name = userInfo["name"];
         chapGroupID = userInfo["group"];
+        mentorGroupID = userInfo["mentorGroup"];
         darkMode = userInfo["darkMode"];
         print("");
         print("------------ USER DEBUG INFO ------------");

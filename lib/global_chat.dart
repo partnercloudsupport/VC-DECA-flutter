@@ -67,6 +67,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
       databaseRef.child("chat").child(selectedChat).push().update({
         "author": name,
         "message": input,
+        "userID": userID,
         "date": formatDate(DateTime.now(), [dd, '/', mm, '/', yyyy, ' ', HH, ':', nn]),
         "role": role
       });
@@ -133,13 +134,13 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      backgroundColor: Colors.white,
       body: new SafeArea(
         child: Column(
           children: <Widget>[
             new Expanded(
               child: new Container(
                 padding: EdgeInsets.all(8.0),
-                color: Colors.white,
                 child: new ListView.builder(
                   itemCount: messageList.length,
                   controller: _scrollController,
@@ -234,10 +235,11 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
                   style: TextStyle(fontFamily: "Product Sans", color: Colors.black, fontSize: 16.0),
                   onSubmitted: sendMessage,
                   decoration: InputDecoration(
-                      labelStyle: TextStyle(fontFamily: "Product Sans",),
                       hintStyle: TextStyle(fontFamily: "Product Sans",),
-                      labelText: "Enter Message",
-                      hintText: "Type a new message to send"
+                      hintText: "Enter Message",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                      )
                   ),
                 ),
               ),

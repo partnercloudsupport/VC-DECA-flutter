@@ -34,6 +34,7 @@ class _AuthCheckerState extends State<AuthChecker> {
         role = userInfo["role"];
         name = userInfo["name"];
         chapGroupID = userInfo["group"];
+        mentorGroupID = userInfo["mentorGroup"];
         darkMode = userInfo["darkMode"];
         print("");
         print("------------ USER DEBUG INFO ------------");

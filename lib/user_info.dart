@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final router = Router();
 
 double appVersion = 1.0;
-int appBuild = 21;
+int appBuild = 22;
 String appStatus = "";
 String appFull = "Version $appVersion";
 
@@ -12,6 +12,7 @@ String name = "";
 String email = "";
 String userID = "";
 String chapGroupID = "Not in a Group";
+String mentorGroupID = "Not in a Group";
 
 var profilePic;
 
