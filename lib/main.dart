@@ -132,6 +132,10 @@ void main() {
     return new ConferenceScheduleViewPage();
   }));
 
+  router.define('/chatImage', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new ChatImageUpload();
+  }));
+
   runApp(new MaterialApp(
     title: "VC DECA",
     home: ConnectionChecker(),
