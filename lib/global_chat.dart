@@ -385,6 +385,7 @@ class _ChatImageUploadState extends State<ChatImageUpload> {
         "role": role,
         "type": "media",
       });
+      router.pop(context);
     }
     else {
       router.pop(context);
@@ -396,7 +397,6 @@ class _ChatImageUploadState extends State<ChatImageUpload> {
     return new Container(
       color: Colors.white,
       height: 200.0,
-      padding: EdgeInsets.all(16.0),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -408,6 +408,7 @@ class _ChatImageUploadState extends State<ChatImageUpload> {
             ),
             onTap: updateProfile,
           ),
+          new Padding(padding: EdgeInsets.all(4.0)),
           new Container(
             child: new Column(
               children: <Widget>[
