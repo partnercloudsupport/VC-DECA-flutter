@@ -151,6 +151,45 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
     }
   }
 
+  Widget getMessageBody(int index) {
+    if (messageList[index].mediaType == "text") {
+      return new Linkify(
+        onOpen: (url) async {
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            throw 'Could not launch $url';
+          }
+        },
+        text: messageList[index].message,
+        linkStyle: TextStyle(
+            fontFamily: "Product Sans",
+            color: getColor(messageList[index].authorRole, messageList[index].author),
+            fontSize: 16.0
+        ),
+        style: TextStyle(
+            fontFamily: "Product Sans",
+            color: Colors.black,
+            fontSize: 16.0
+        ),
+      );
+    }
+    else {
+      return new Container(
+        padding: EdgeInsets.all(8.0),
+        child: new ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          child: new CachedNetworkImage(
+            imageUrl: messageList[index].message,
+            height: 300.0,
+            width: 300.0,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
+  }
+
   Future<Null> focusNodeListener() async {
     if (myFocusNode.hasFocus) {
       await Future.delayed(const Duration(milliseconds: 100));
@@ -240,26 +279,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
                                 )
                               ],
                             ),
-                            new Linkify(
-                              onOpen: (url) async {
-                                if (await canLaunch(url)) {
-                                  await launch(url);
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                              text: messageList[index].message,
-                              linkStyle: TextStyle(
-                                  fontFamily: "Product Sans",
-                                  color: getColor(messageList[index].authorRole, messageList[index].author),
-                                  fontSize: 16.0
-                              ),
-                              style: TextStyle(
-                                  fontFamily: "Product Sans",
-                                  color: Colors.black,
-                                  fontSize: 16.0
-                              ),
-                            ),
+                            getMessageBody(index)
                           ],
                         )
                       ),

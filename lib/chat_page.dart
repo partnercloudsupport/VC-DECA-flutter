@@ -297,7 +297,7 @@ class _ChatPageState extends State<ChatPage> {
                   onTap: () {
                     setState(() {
                       mentorGroupID = "Not in a Group";
-                      databaseRef.child("users").child(userID).child("mentorGroup").set(chapGroupID);
+                      databaseRef.child("users").child(userID).child("mentorGroup").set(mentorGroupID);
                       router.pop(context);
                     });
                   },
