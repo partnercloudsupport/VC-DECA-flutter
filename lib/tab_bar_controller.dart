@@ -142,10 +142,11 @@ class _TabBarControllerState extends State<TabBarController> {
               onPressed: () {
                 if (newGroupCode != "" && newChaperoneName != "") {
                   databaseRef.child("chat").child(newGroupCode).push().update({
-                    "author": "GroupCreatorBot",
+                    "author": "Group Creator",
                     "message": "Welcome to $newChaperoneName's chaperone group!",
                     "date": "N/A",
-                    "role": "Bot"
+                    "role": "Bot",
+                    "type": "text"
                   });
                   Navigator.of(context).pop();
                 }
@@ -196,7 +197,7 @@ class _TabBarControllerState extends State<TabBarController> {
       }
       else {
         title = "VC DECA";
-        if (role == "Admin" || role == "Officer") {
+        if (role == "Admin" || role == "Officer" || role == "Advisor") {
           currentTabButton = new FloatingActionButton(
             backgroundColor: mainColor,
             child: Icon(Icons.add),

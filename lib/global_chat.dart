@@ -12,6 +12,18 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
+}
+
 class GlobalChatPage extends StatefulWidget {
   @override
   _GlobalChatPageState createState() => _GlobalChatPageState();
@@ -55,10 +67,25 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
 
   Color sendColor = Colors.grey;
 
+  Color memberColor = Colors.grey;
+  Color officerColor = Colors.grey;
+  Color adminColor = Colors.grey;
+  Color botColor = Colors.grey;
+  Color advisorColor = Colors.grey;
+
   String type = "text";
   String message = "";
 
   _GlobalChatPageState() {
+    databaseRef.child("chatColors").once().then((DataSnapshot snapshot) {
+      setState(() {
+        memberColor = HexColor(snapshot.value["memberColor"]);
+        officerColor = HexColor(snapshot.value["officerColor"]);
+        adminColor = HexColor(snapshot.value["adminColor"]);
+        botColor = HexColor(snapshot.value["botColor"]);
+        advisorColor = HexColor(snapshot.value["advisorColor"]);
+      });
+    });
     databaseRef.child("chat").child(selectedChat).onChildAdded.listen(onNewMessage);
     if (role == "Admin") {
       _visible = true;
@@ -129,14 +156,21 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
       return mainColor;
     }
     else if (authorRole == "Member") {
-      return Colors.amber;
+      return memberColor;
+    }
+    else if (authorRole == "Officer") {
+      return officerColor;
+    }
+    else if (authorRole == "Admin") {
+      return adminColor;
+    }
+    else if (authorRole == "Advisor") {
+      return advisorColor;
     }
     else if (authorRole == "Bot") {
-      return Colors.greenAccent;
+      return botColor;
     }
-    else {
-      return Colors.redAccent;
-    }
+
   }
 
   bool getVisibility(String authorRole, String messageAuthor) {

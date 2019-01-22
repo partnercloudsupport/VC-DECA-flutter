@@ -220,7 +220,8 @@ class _ChatPageState extends State<ChatPage> {
                     "author": "Group Creator",
                     "message": "Welcome to $name's mentor group!",
                     "date": "N/A",
-                    "role": "Bot"
+                    "role": "Bot",
+                    "type": "text"
                   });
                   setState(() {
                     mentorGroupID = newGroupCode;
@@ -377,7 +378,7 @@ class _ChatPageState extends State<ChatPage> {
               toMentorChat();
             },
             onLongPress: () {
-              if (chapGroupID != "Not in a Group" && role != "Officer") {
+              if (mentorGroupID != "Not in a Group" && role != "Officer") {
                 leaveMentorGroupBottomSheet();
               }
             },

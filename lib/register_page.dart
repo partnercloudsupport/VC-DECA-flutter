@@ -85,6 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
           "role": role,
           "userID": userID,
           "group": "Not in a Group",
+          "mentorGroup": "Not in a Group",
           "darkMode": darkMode
         });
 
@@ -192,10 +193,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 textCapitalization: TextCapitalization.none,
                 obscureText: true,
                 onChanged: confirmField,
-              ),
-              new Padding(padding: EdgeInsets.all(8.0)),
-              new Text(
-                "By creating a VC DECA Account, you agree to our terms of service and privacy policy."
               ),
               new Padding(padding: EdgeInsets.all(8.0)),
               new RaisedButton(
