@@ -16,9 +16,16 @@ class _UserDrawerState extends State<UserDrawer> {
   final databaseRef = FirebaseDatabase.instance.reference();
   final storageRef = FirebaseStorage.instance.ref();
 
+  bool _visible = true;
+
   @override
   void initState() {
     super.initState();
+    databaseRef.child("myDeca").once().then((DataSnapshot snapshot) {
+      setState(() {
+        _visible = snapshot.value;
+      });
+    });
   }
 
   void signOutBottomSheetMenu() {
@@ -164,15 +171,18 @@ class _UserDrawerState extends State<UserDrawer> {
                       title: new Text(role, style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
                       leading: Icon(Icons.verified_user),
                     ),
-                    new ListTile(
-                      title: new Text("myDECA", style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
-                      leading: Icon(Icons.person),
-                      onTap: () async {
-                        router.pop(context);
-                        await new Future.delayed(const Duration(milliseconds: 10));
-                        router.navigateTo(context, '/myDECA', transition: TransitionType.native);
-                      },
-                    ),
+                    new Visibility(
+                      visible: _visible,
+                      child: new ListTile(
+                        title: new Text("myDECA", style: TextStyle(fontFamily: "Product Sans", fontSize: 16.0)),
+                        leading: Icon(Icons.person),
+                        onTap: () async {
+                          router.pop(context);
+                          await new Future.delayed(const Duration(milliseconds: 10));
+                          router.navigateTo(context, '/myDECA', transition: TransitionType.native);
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),

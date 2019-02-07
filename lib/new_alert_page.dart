@@ -14,6 +14,13 @@ class _NewAlertPageState extends State<NewAlertPage> {
 
   String alertTitle = "";
   String alertBody = "";
+  String notifBody = "";
+
+  bool sendNotif = false;
+
+  double notifcationContainerHeight = 0.0;
+
+  final bodyController = new TextEditingController();
 
   publish(String title, String alert) {
     if (title != "" && alert != "") {
@@ -22,6 +29,21 @@ class _NewAlertPageState extends State<NewAlertPage> {
         "body": alert,
         "date": formatDate(DateTime.now(), [dd, '/', mm, '/', yyyy, ' ', HH, ':', mm])
       });
+      if (sendNotif) {
+        print("Notify");
+        if (notifBody != "") {
+          databaseRef.child("notifications").push().update({
+            "title": title,
+            "body": notifBody,
+          });
+        }
+        else {
+          databaseRef.child("notifications").push().update({
+            "title": title,
+            "body": alert,
+          });
+        }
+      }
       router.pop(context);
     }
     else {
@@ -58,7 +80,9 @@ class _NewAlertPageState extends State<NewAlertPage> {
                     ),
                     autocorrect: true,
                     onChanged: (input) {
-                      alertTitle = input;
+                      setState(() {
+                        alertTitle = input;
+                      });
                     },
                   ),
                   new TextField(
@@ -68,8 +92,64 @@ class _NewAlertPageState extends State<NewAlertPage> {
                     maxLines: null,
                     autocorrect: true,
                     onChanged: (input) {
-                      alertBody = input;
+                      setState(() {
+                        alertBody = input;
+                      });
                     },
+                  ),
+                  new SwitchListTile.adaptive(
+                    activeColor: mainColor,
+                    activeTrackColor: mainColor,
+                    value: sendNotif,
+                    title: new Text("Send Notification", style: TextStyle(fontFamily: "Product Sans"),),
+                    onChanged: (bool) {
+                      setState(() {
+                        sendNotif = !sendNotif;
+                        if (sendNotif) {
+                          notifcationContainerHeight = 125;
+                        }
+                        else {
+                          notifcationContainerHeight = 0;
+                        }
+                      });
+                      print("Send Notification: $sendNotif");
+                    },
+                  ),
+                  new AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    height: notifcationContainerHeight,
+                    child: Column(
+                      children: <Widget>[
+                        new Card(
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            width: MediaQuery.of(context).size.width,
+                            child: new Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new Text(alertTitle, style: TextStyle(fontFamily: "Product Sans", fontSize: 20.0),),
+                                new Padding(padding: EdgeInsets.all(4.0)),
+                                new TextField(
+                                  controller: bodyController,
+                                  onChanged: (input) {
+                                    notifBody = input;
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: alertBody
+                                  ),
+                                  style: TextStyle(
+                                    fontFamily: "Product Sans",
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        new Padding(padding: EdgeInsets.all(4.0),),
+                        new Text("This is a preview of the notification", style: TextStyle(fontFamily: "Product Sans", color: Colors.grey),),
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -82,7 +162,7 @@ class _NewAlertPageState extends State<NewAlertPage> {
                   publish(alertTitle, alertBody);
                 },
                 color: mainColor,
-                child: new Text("Publish", style: TextStyle(fontFamily: "Product Sans", color: Colors.white, fontSize: 18.0),),
+                child: new Text("Publish Announcement", style: TextStyle(fontFamily: "Product Sans", color: Colors.white, fontSize: 18.0),),
               ),
               padding: EdgeInsets.all(16.0),
             )

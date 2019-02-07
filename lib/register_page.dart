@@ -79,28 +79,30 @@ class _RegisterPageState extends State<RegisterPage> {
         userID = user.uid;
         role = "Member";
 
-        databaseRef.child("users").child(userID).update({
-          "name": name,
-          "email": email,
-          "role": role,
-          "userID": userID,
-          "group": "Not in a Group",
-          "mentorGroup": "Not in a Group",
-          "darkMode": darkMode
-        });
+        user.sendEmailVerification();
 
-        print("");
-        print("------------ USER DEBUG INFO ------------");
-        print("NAME: $name");
-        print("EMAIL: $email");
-        print("ROLE: $role");
-        print("USERID: $userID");
-        print("-----------------------------------------");
-        print("");
-        
-        storageRef.child("users").child("$userID.png").putData(profilePic);
-        
-        router.navigateTo(context,'/registered', transition: TransitionType.fadeIn, clearStack: true);
+//        databaseRef.child("users").child(userID).update({
+//          "name": name,
+//          "email": email,
+//          "role": role,
+//          "userID": userID,
+//          "group": "Not in a Group",
+//          "mentorGroup": "Not in a Group",
+//          "darkMode": darkMode
+//        });
+//
+//        print("");
+//        print("------------ USER DEBUG INFO ------------");
+//        print("NAME: $name");
+//        print("EMAIL: $email");
+//        print("ROLE: $role");
+//        print("USERID: $userID");
+//        print("-----------------------------------------");
+//        print("");
+//
+//        storageRef.child("users").child("$userID.png").putData(profilePic);
+//
+//        router.navigateTo(context,'/registered', transition: TransitionType.fadeIn, clearStack: true);
       }
       catch (error) {
         print("Error: ${error.details}");
