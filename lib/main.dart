@@ -136,6 +136,18 @@ void main() {
     return new ChatImageUpload();
   }));
 
+  router.define('/sampleEvent', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new SampleEventPage();
+  }));
+
+  router.define('/sampleExam', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new SampleExamPage();
+  }));
+
+  router.define('/sampleGuidelines', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new SampleGuidelinesPage();
+  }));
+
   runApp(new MaterialApp(
     title: "VC DECA",
     home: ConnectionChecker(),

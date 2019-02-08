@@ -87,7 +87,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
       });
     });
     databaseRef.child("chat").child(selectedChat).onChildAdded.listen(onNewMessage);
-    if (role == "Admin") {
+    if (role != "Member") {
       _visible = true;
     }
   }

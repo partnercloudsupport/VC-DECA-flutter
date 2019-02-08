@@ -6,7 +6,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_page.dart';
-import 'setting_page.dart';
+import 'settings_page.dart';
 import 'events_page.dart';
 import 'chat_page.dart';
 import 'conferences.dart';

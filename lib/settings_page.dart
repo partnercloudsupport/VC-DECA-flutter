@@ -312,7 +312,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   padding: EdgeInsets.all(16.0),
                   child: new Text("Preferences", style: TextStyle(color: mainColor, fontWeight: FontWeight.bold, fontFamily: "Product Sans"),),
                 ),
-                new SwitchListTile(
+                new SwitchListTile.adaptive(
+                  activeColor: mainColor,
+                  activeTrackColor: mainColor,
                   title: new Text("Push Notifications", style: TextStyle(fontFamily: "Product Sans",)),
                   value: notifications,
                   onChanged: (bool value) {
@@ -322,7 +324,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
                 new Divider(height: 0.0, color: mainColor),
-                new SwitchListTile(
+                new SwitchListTile.adaptive(
+                  activeColor: mainColor,
+                  activeTrackColor: mainColor,
                   title: new Text("Chat Notifications", style: TextStyle(fontFamily: "Product Sans",)),
                   value: chatNotifications,
                   onChanged: (bool value) {
