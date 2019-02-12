@@ -69,6 +69,7 @@ class _LoginPage extends State<LoginPage> {
         chapGroupID = userInfo["group"];
         mentorGroupID = userInfo["mentorGroup"];
         darkMode = userInfo["darkMode"];
+        profilePic = userInfo["profilePicUrl"];
         print("");
         print("------------ USER DEBUG INFO ------------");
         print("NAME: $name");
@@ -77,10 +78,10 @@ class _LoginPage extends State<LoginPage> {
         print("USERID: $userID");
         print("-----------------------------------------");
         print("");
-      });
-
-      storageRef.child("users").child("$userID.png").getData(10000000).then((data) {
-        profilePic = data;
+        if (email == null || name == null) {
+          FirebaseAuth.instance.signOut();
+          router.navigateTo(context, '/notLogged', transition: TransitionType.fadeIn, replace: true);
+        }
       });
 
       router.navigateTo(context,'/registered', transition: TransitionType.fadeIn, clearStack: true);
@@ -118,10 +119,9 @@ class _LoginPage extends State<LoginPage> {
       body: new Container(
         padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 32.0),
         child: new Center(
-          child: new Column(
+          child: new ListView(
             children: <Widget>[
-              new Text("Login to your VC DECA Account below!", style: TextStyle(fontFamily: "Product Sans",),),
-              new Padding(padding: EdgeInsets.all(8.0)),
+              new Text("Login to your VC DECA Account below!", style: TextStyle(fontFamily: "Product Sans",), textAlign: TextAlign.center,),
               new TextField(
                 decoration: InputDecoration(
                     icon: new Icon(Icons.email),

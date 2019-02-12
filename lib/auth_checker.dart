@@ -18,10 +18,6 @@ class _AuthCheckerState extends State<AuthChecker> {
 
   Future<void> checkUserLogged() async {
 
-    storageRef.child("default.png").getData(10000000).then((data) {
-      profilePic = data;
-    });
-
     var user = await FirebaseAuth.instance.currentUser();
     if (user != null) {
       //User logged in
@@ -36,6 +32,7 @@ class _AuthCheckerState extends State<AuthChecker> {
         chapGroupID = userInfo["group"];
         mentorGroupID = userInfo["mentorGroup"];
         darkMode = userInfo["darkMode"];
+        profilePic = userInfo["profilePicUrl"];
         print("");
         print("------------ USER DEBUG INFO ------------");
         print("NAME: $name");
@@ -44,10 +41,10 @@ class _AuthCheckerState extends State<AuthChecker> {
         print("USERID: $userID");
         print("-----------------------------------------");
         print("");
-      });
-
-      storageRef.child("users").child("$userID.png").getData(10000000).then((data) {
-        profilePic = data;
+        if (email == null || name == null) {
+          FirebaseAuth.instance.signOut();
+          router.navigateTo(context, '/notLogged', transition: TransitionType.fadeIn, replace: true);
+        }
       });
 
       router.navigateTo(context, '/logged', transition: TransitionType.fadeIn, replace: true);

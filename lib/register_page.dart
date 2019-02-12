@@ -13,10 +13,13 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
 
-  String _name = "";
+  String _firstName = "";
+  String _lastName = "";
   String _email = "";
   String _password = "";
   String _confirm = "";
+
+  bool cancelSession = false;
 
   final databaseRef = FirebaseDatabase.instance.reference();
   final storageRef = FirebaseStorage.instance.ref();
@@ -30,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Account Creation Error"),
+          title: new Text("Account Creation Error", style: TextStyle(fontFamily: "Product Sans"),),
           content: new Text(
             "There was an error creating your VC DECA Account: $error",
             style: TextStyle(fontFamily: "Product Sans", fontSize: 14.0),
@@ -48,6 +51,18 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  void emailVerificationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Verify Email", style: TextStyle(fontFamily: "Product Sans"),),
+          content: new EmailVerificationAlert(),
+        );
+      }
+    );
+  }
+
   void register() async {
     setState(() {
       buttonChild = new HeartbeatProgressIndicator(
@@ -57,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       );
     });
-    if (_name == "") {
+    if (_firstName == "" || _lastName == "") {
       print("Name cannot be empty");
       accountErrorDialog("Name cannot be empty");
     }
@@ -74,35 +89,50 @@ class _RegisterPageState extends State<RegisterPage> {
         FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
         print("Signed in! ${user.uid}");
 
-        name = _name;
+        name = _firstName.replaceAll(new RegExp(r"\s+\b|\b\s"), "") + " " + _lastName.replaceAll(new RegExp(r"\s+\b|\b\s"), "");
         email = _email;
         userID = user.uid;
         role = "Member";
 
-        user.sendEmailVerification();
+        await user.sendEmailVerification();
 
-//        databaseRef.child("users").child(userID).update({
-//          "name": name,
-//          "email": email,
-//          "role": role,
-//          "userID": userID,
-//          "group": "Not in a Group",
-//          "mentorGroup": "Not in a Group",
-//          "darkMode": darkMode
-//        });
-//
-//        print("");
-//        print("------------ USER DEBUG INFO ------------");
-//        print("NAME: $name");
-//        print("EMAIL: $email");
-//        print("ROLE: $role");
-//        print("USERID: $userID");
-//        print("-----------------------------------------");
-//        print("");
-//
-//        storageRef.child("users").child("$userID.png").putData(profilePic);
-//
-//        router.navigateTo(context,'/registered', transition: TransitionType.fadeIn, clearStack: true);
+        emailVerificationDialog();
+
+        Scaffold.of(context).showSnackBar(new SnackBar(
+          content: Text("Please check your email to verify your email address.", textAlign: TextAlign.center, textScaleFactor: 1.2),
+          action: new SnackBarAction(label: "I VERIFIED", onPressed: () async {
+            FirebaseUser user = await FirebaseAuth.instance.currentUser();
+            user.reload();
+            if (user.isEmailVerified) {
+              print("Email Verified!");
+              databaseRef.child("users").child(userID).update({
+                "name": name,
+                "email": email,
+                "role": role,
+                "userID": userID,
+                "group": "Not in a Group",
+                "mentorGroup": "Not in a Group",
+                "darkMode": darkMode,
+                "profilePicUrl": profilePic
+              });
+
+              print("");
+              print("------------ USER DEBUG INFO ------------");
+              print("NAME: $name");
+              print("EMAIL: $email");
+              print("ROLE: $role");
+              print("USERID: $userID");
+              print("-----------------------------------------");
+              print("");
+
+              router.navigateTo(context,'/registered', transition: TransitionType.fadeIn, clearStack: true);
+            }
+            else {
+              print("Email Not Verified!");
+            }
+          }),
+        ));
+
       }
       catch (error) {
         print("Error: ${error.details}");
@@ -114,8 +144,12 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  void nameField(input) {
-    _name = input;
+  void firstNameField(input) {
+    _firstName = input;
+  }
+
+  void lastNameField(input) {
+    _lastName = input;
   }
 
   void emailField(input) {
@@ -139,27 +173,38 @@ class _RegisterPageState extends State<RegisterPage> {
           "VC DECA",
           style: TextStyle(
             fontFamily: "Product Sans",
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.bold,
           ),
+          textAlign: TextAlign.center,
         ),
       ),
       body: new Container(
         padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 32.0),
         child: new Center(
-          child: new Column(
+          child: new ListView(
             children: <Widget>[
-              new Text("Create your VC DECA Account below!", style: TextStyle(fontFamily: "Product Sans",),),
-              new Padding(padding: EdgeInsets.all(8.0)),
+              new Text("Create your VC DECA Account below!", style: TextStyle(fontFamily: "Product Sans",), textAlign: TextAlign.center,),
               new TextField(
                 decoration: InputDecoration(
                   icon: new Icon(Icons.person),
-                  labelText: "Name",
-                  hintText: "Enter your full name"
+                  labelText: "First Name",
+                  hintText: "Enter your first name"
                 ),
                 autocorrect: true,
                 keyboardType: TextInputType.text,
                 textCapitalization: TextCapitalization.words,
-                onChanged: nameField,
+                onChanged: firstNameField,
+              ),
+              new TextField(
+                decoration: InputDecoration(
+                    icon: new Icon(Icons.person),
+                    labelText: "Last Name",
+                    hintText: "Enter your last name"
+                ),
+                autocorrect: true,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
+                onChanged: lastNameField,
               ),
               new TextField(
                 decoration: InputDecoration(
@@ -224,3 +269,27 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+
+class EmailVerificationAlert extends StatefulWidget {
+  @override
+  _EmailVerificationAlertState createState() => _EmailVerificationAlertState();
+}
+
+class _EmailVerificationAlertState extends State<EmailVerificationAlert> {
+
+  final databaseRef = FirebaseDatabase.instance.reference();
+  final storageRef = FirebaseStorage.instance.ref();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: new Column(
+        children: <Widget>[
+          new Text("Please verify your email address via the link we sent you."),
+
+        ],
+      ),
+    );
+  }
+}
+

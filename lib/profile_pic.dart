@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'user_info.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfilePic extends StatefulWidget {
@@ -12,11 +13,11 @@ class ProfilePic extends StatefulWidget {
 class _ProfilePicState extends State<ProfilePic> {
 
   final storageRef = FirebaseStorage.instance.ref();
+  final databaseRef = FirebaseDatabase.instance.reference();
 
   double _progress = 0.0;
   String uploadStatus = "";
   bool _visible = true;
-  Icon buttonTxt = Icon(Icons.clear);
 
   Future<void> updateProfile() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -40,23 +41,17 @@ class _ProfilePicState extends State<ProfilePic> {
           setState(() {
             uploadStatus = "Uploading - ${event.snapshot.bytesTransferred.toDouble() / event.snapshot.totalByteCount.toDouble() * 100}%";
             _progress = event.snapshot.bytesTransferred.toDouble() / event.snapshot.totalByteCount.toDouble();
-            if (event.snapshot.bytesTransferred.toDouble() / event.snapshot.totalByteCount.toDouble() == 1.0) {
-              setState(() {
-                uploadStatus = "Saving Changes...";
-              });
-              print("DOWNLOADING");
-              storageRef.child("users").child("$userID.png").getData(10000000).then((data) {
-                setState(() {
-                  uploadStatus = "Finished!";
-                  profilePic = data;
-                  buttonTxt = Icon(Icons.check);
-                  _visible = true;
-                });
-              });
-              print("DONE!");
-            }
           });
         });
+        var dowurl = await (await profileUploadTask.onComplete).ref.getDownloadURL();
+        var url = dowurl.toString();
+        databaseRef.child("users").child(userID).child("profilePicUrl").set(url);
+        setState(() {
+          profilePic = url;
+          _visible = true;
+          uploadStatus = "Done!";
+        });
+
       }
     }
 }
@@ -77,7 +72,7 @@ class _ProfilePicState extends State<ProfilePic> {
         leading: new Container(
           child: new Visibility(
             child: new IconButton(
-              icon: buttonTxt,
+              icon: Icon(Icons.clear),
               color: Colors.white,
               onPressed: () {
                 router.pop(context);
@@ -95,7 +90,7 @@ class _ProfilePicState extends State<ProfilePic> {
           children: <Widget>[
             new GestureDetector(
               child: new ClipOval(
-                child: new Image.memory(
+                child: new Image.network(
                   profilePic,
                   width: 200.0,
                   height: 200.0,

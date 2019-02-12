@@ -14,6 +14,8 @@ class _ChatPageState extends State<ChatPage> {
   final databaseRef = FirebaseDatabase.instance.reference();
 
   var _visible = false;
+  bool _mentorVisible = true;
+  bool _advisorVisible = false;
 
   String joinGroup = "";
   
@@ -22,6 +24,12 @@ class _ChatPageState extends State<ChatPage> {
   void toOfficerChat() {
     chatTitle = "Officers";
     selectedChat = "officers";
+    router.navigateTo(context, '/chat', transition: TransitionType.native);
+  }
+
+  void toAdvisorChat() {
+    chatTitle = "Advisors";
+    selectedChat = "advisors";
     router.navigateTo(context, '/chat', transition: TransitionType.native);
   }
 
@@ -323,6 +331,12 @@ class _ChatPageState extends State<ChatPage> {
     if (role != "Member") {
       _visible = true;
     }
+    if (role == "Advisor") {
+      _mentorVisible = false;
+    }
+    if (role == "Admin" || role == "Advisor") {
+      _advisorVisible = true;
+    }
   }
 
   @override
@@ -370,32 +384,56 @@ class _ChatPageState extends State<ChatPage> {
             height: 0.0,
             color: mainColor,
           ),
-          new ListTile(
-            title: Text("Mentor Group", style: TextStyle(fontFamily: "Product Sans")),
-            subtitle: Text(mentorGroupID, style: TextStyle(fontFamily: "Product Sans")),
-            onTap: () {
-              print("Entering Mentor Chat");
-              toMentorChat();
-            },
-            onLongPress: () {
-              if (mentorGroupID != "Not in a Group" && role != "Officer") {
-                leaveMentorGroupBottomSheet();
-              }
-            },
-            trailing: new Icon(
-              Icons.arrow_forward_ios,
-              color: mainColor,
+          new Visibility(
+            visible: _mentorVisible,
+            child: new ListTile(
+              title: Text("Mentor Group", style: TextStyle(fontFamily: "Product Sans")),
+              subtitle: Text(mentorGroupID, style: TextStyle(fontFamily: "Product Sans")),
+              onTap: () {
+                print("Entering Mentor Chat");
+                toMentorChat();
+              },
+              onLongPress: () {
+                if (mentorGroupID != "Not in a Group" && role != "Officer") {
+                  leaveMentorGroupBottomSheet();
+                }
+              },
+              trailing: new Icon(
+                Icons.arrow_forward_ios,
+                color: mainColor,
+              ),
             ),
           ),
-          new Divider(
-            height: 0.0,
-            color: mainColor,
+          new Visibility(
+            visible: _mentorVisible,
+            child: new Divider(
+              height: 0.0,
+              color: mainColor,
+            ),
           ),
           new Visibility(
             visible: _visible,
             child: new ListTile(
               title: Text("Officer Chat", style: TextStyle(fontFamily: "Product Sans")),
               onTap: toOfficerChat,
+              trailing: new Icon(
+                Icons.arrow_forward_ios,
+                color: mainColor,
+              ),
+            ),
+          ),
+          new Visibility(
+            visible: _visible,
+            child: new Divider(
+              height: 0.0,
+              color: mainColor,
+            ),
+          ),
+          new Visibility(
+            visible: _advisorVisible,
+            child: new ListTile(
+              title: Text("Advisor Chat", style: TextStyle(fontFamily: "Product Sans")),
+              onTap: toAdvisorChat,
               trailing: new Icon(
                 Icons.arrow_forward_ios,
                 color: mainColor,

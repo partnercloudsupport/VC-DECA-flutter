@@ -54,9 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     selectedYear = "Please select a conference";
                     selectedCategory = "";
                     selectedEvent = "";
-                    storageRef.child("default.png").getData(10000000).then((data) {
-                      profilePic = data;
-                    });
+                    profilePic = "https://firebasestorage.googleapis.com/v0/b/vc-deca.appspot.com/o/default.png?alt=media&token=a38584fb-c774-4f75-99ab-71b120c87df1";
                     FirebaseAuth.instance.signOut();
                     router.navigateTo(context, '/notLogged', clearStack: true);
                   },

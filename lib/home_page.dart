@@ -70,76 +70,88 @@ class _HomePageState extends State<HomePage> {
     return new Container(
       color: Colors.white,
       padding: EdgeInsets.all(16.0),
-      child: ListView.builder(
-        itemCount: alertList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () {
-              selectedAlert = alertList[index].key;
-              print(selectedAlert);
-              router.navigateTo(context, '/alert', transition: TransitionType.native);
-            },
-            child: new Column(
-              children: <Widget>[
-                new Card(
-                  child: new Container(
-                    padding: EdgeInsets.all(16.0),
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        new Container(
-                            child: new Icon(
-                              Icons.notifications_active,
-                              color: mainColor,
-                            )
-                        ),
-                        new Padding(padding: EdgeInsets.all(5.0)),
-                        new Column(
-                          children: <Widget>[
-                            new Container(
-                              width: MediaQuery.of(context).size.width - 150,
-                              child: new Text(
-                                alertList[index].alertTitle,
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "Product Sans",
-                                  fontWeight: FontWeight.bold,
-                                ),
+      child: new Column(
+        children: <Widget>[
+          new Text(
+            "Announcements",
+            style: TextStyle(
+              fontFamily: "Product Sans"
+            ),
+          ),
+          new Expanded(
+            child: ListView.builder(
+              itemCount: alertList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    selectedAlert = alertList[index].key;
+                    print(selectedAlert);
+                    router.navigateTo(context, '/alert', transition: TransitionType.native);
+                  },
+                  child: new Column(
+                    children: <Widget>[
+                      new Card(
+                        child: new Container(
+                          padding: EdgeInsets.all(16.0),
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              new Container(
+                                  child: new Icon(
+                                    Icons.notifications_active,
+                                    color: mainColor,
+                                  )
                               ),
-                            ),
-                            new Padding(padding: EdgeInsets.all(5.0)),
-                            new Container(
-                              width: MediaQuery.of(context).size.width - 150,
-                              child: new Text(
-                                alertList[index].alertBody,
-                                textAlign: TextAlign.start,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  fontFamily: "Product Sans",
-                                ),
+                              new Padding(padding: EdgeInsets.all(5.0)),
+                              new Column(
+                                children: <Widget>[
+                                  new Container(
+                                    width: MediaQuery.of(context).size.width - 150,
+                                    child: new Text(
+                                      alertList[index].alertTitle,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontFamily: "Product Sans",
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  new Padding(padding: EdgeInsets.all(5.0)),
+                                  new Container(
+                                    width: MediaQuery.of(context).size.width - 150,
+                                    child: new Text(
+                                      alertList[index].alertBody,
+                                      textAlign: TextAlign.start,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontFamily: "Product Sans",
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              new Padding(padding: EdgeInsets.all(5.0)),
+                              new Container(
+                                  child: new Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: mainColor,
+                                  )
+                              ),
+                            ],
+                          ),
                         ),
-                        new Padding(padding: EdgeInsets.all(5.0)),
-                        new Container(
-                            child: new Icon(
-                              Icons.arrow_forward_ios,
-                              color: mainColor,
-                            )
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                new Padding(padding: EdgeInsets.all(5.0))
-              ],
-            )
-          );
-        },
+                      ),
+                      new Padding(padding: EdgeInsets.all(5.0))
+                    ],
+                  )
+                );
+              },
+            ),
+          ),
+        ],
       )
     );
   }

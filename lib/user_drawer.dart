@@ -53,9 +53,7 @@ class _UserDrawerState extends State<UserDrawer> {
                     selectedYear = "Please select a conference";
                     selectedCategory = "";
                     selectedEvent = "";
-                    storageRef.child("default.png").getData(10000000).then((data) {
-                      profilePic = data;
-                    });
+                    profilePic = "https://firebasestorage.googleapis.com/v0/b/vc-deca.appspot.com/o/default.png?alt=media&token=a38584fb-c774-4f75-99ab-71b120c87df1";
                     FirebaseAuth.instance.signOut();
                     router.navigateTo(context, '/notLogged', clearStack: true);
                   },
@@ -133,7 +131,7 @@ class _UserDrawerState extends State<UserDrawer> {
                         new Row(
                           children: <Widget>[
                             new ClipOval(
-                              child: new Image.memory(
+                              child: new Image.network(
                                 profilePic,
                                 width: 50.0,
                                 height: 50.0,
