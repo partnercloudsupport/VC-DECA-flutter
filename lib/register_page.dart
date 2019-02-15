@@ -6,6 +6,8 @@ import 'user_info.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
+String tempPassword = "";
+
 class RegisterPage extends StatefulWidget {
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -54,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void emailVerificationDialog() {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           title: new Text("Verify Email", style: TextStyle(fontFamily: "Product Sans"),),
@@ -86,6 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
     else {
       try {
+        tempPassword = _password;
         FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
         print("Signed in! ${user.uid}");
 
@@ -97,42 +101,6 @@ class _RegisterPageState extends State<RegisterPage> {
         await user.sendEmailVerification();
 
         emailVerificationDialog();
-
-        Scaffold.of(context).showSnackBar(new SnackBar(
-          content: Text("Please check your email to verify your email address.", textAlign: TextAlign.center, textScaleFactor: 1.2),
-          action: new SnackBarAction(label: "I VERIFIED", onPressed: () async {
-            FirebaseUser user = await FirebaseAuth.instance.currentUser();
-            user.reload();
-            if (user.isEmailVerified) {
-              print("Email Verified!");
-              databaseRef.child("users").child(userID).update({
-                "name": name,
-                "email": email,
-                "role": role,
-                "userID": userID,
-                "group": "Not in a Group",
-                "mentorGroup": "Not in a Group",
-                "darkMode": darkMode,
-                "profilePicUrl": profilePic
-              });
-
-              print("");
-              print("------------ USER DEBUG INFO ------------");
-              print("NAME: $name");
-              print("EMAIL: $email");
-              print("ROLE: $role");
-              print("USERID: $userID");
-              print("-----------------------------------------");
-              print("");
-
-              router.navigateTo(context,'/registered', transition: TransitionType.fadeIn, clearStack: true);
-            }
-            else {
-              print("Email Not Verified!");
-            }
-          }),
-        ));
-
       }
       catch (error) {
         print("Error: ${error.details}");
@@ -280,13 +248,86 @@ class _EmailVerificationAlertState extends State<EmailVerificationAlert> {
   final databaseRef = FirebaseDatabase.instance.reference();
   final storageRef = FirebaseStorage.instance.ref();
 
+  String mainText = "Please verify your email address via the link we sent you.";
+  Color textColor = Colors.black;
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 100.0,
       child: new Column(
         children: <Widget>[
-          new Text("Please verify your email address via the link we sent you."),
+          new Text(
+            mainText,
+            style: TextStyle(fontFamily: "Product Sans", color: textColor),
+          ),
+          new Padding(padding: EdgeInsets.all(6.0)),
+          new Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              new FlatButton(
+                child: new Text("CHANGE EMAIL"),
+                textColor: mainColor,
+                onPressed: () async {
+                  FirebaseAuth.instance.reauthenticateWithEmailAndPassword(email: email, password: tempPassword);
+                  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                  await user.delete();
+                  router.pop(context);
+                },
+              ),
+              new FlatButton(
+                child: new Text("VERIFY"),
+                textColor: Colors.white,
+                color: mainColor,
+                onPressed: () async {
+                  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                  user.reload();
+                  if (user.isEmailVerified) {
+                    print("User Email Verified");
+                    setState(() {
+                      mainText = "Successfully verified email!\nCreating Account...";
+                      textColor = Colors.greenAccent;
+                    });
+                    databaseRef.child("users").child(userID).update({
+                      "name": name,
+                      "email": email,
+                      "role": role,
+                      "userID": userID,
+                      "group": "Not in a Group",
+                      "mentorGroup": "Not in a Group",
+                      "darkMode": darkMode,
+                      "profilePicUrl": profilePic
+                    });
 
+                    print("");
+                    print("------------ USER DEBUG INFO ------------");
+                    print("NAME: $name");
+                    print("EMAIL: $email");
+                    print("ROLE: $role");
+                    print("USERID: $userID");
+                    print("-----------------------------------------");
+                    print("");
+
+                    router.navigateTo(context,'/registered', transition: TransitionType.fadeIn, clearStack: true);
+                  }
+                  else {
+                    print("User Email Not Verified");
+                    setState(() {
+                      mainText = "User has not been verified. Please try again.";
+                      textColor = Colors.redAccent;
+                    });
+                    Future.delayed(const Duration(seconds: 3), () {
+                      setState(() {
+                        mainText = "Please verify your email address via the link we sent you.";
+                        textColor = Colors.black;
+                      });
+                    });
+                  }
+                },
+              )
+            ],
+          )
         ],
       ),
     );

@@ -331,10 +331,10 @@ class _ChatPageState extends State<ChatPage> {
     if (role != "Member") {
       _visible = true;
     }
-    if (role == "Advisor") {
+    if (role == "Advisor" || role == "Chaperone") {
       _mentorVisible = false;
     }
-    if (role == "Admin" || role == "Advisor") {
+    if (role == "Admin" || role == "Advisor" || role == "Chaperone") {
       _advisorVisible = true;
     }
   }

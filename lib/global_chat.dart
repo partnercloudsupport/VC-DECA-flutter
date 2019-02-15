@@ -36,6 +36,7 @@ class ChatMessage {
   String authorID;
   String authorRole;
   String mediaType;
+  bool nsfw;
 
   ChatMessage(this.message, this.author, this.authorRole);
 
@@ -45,6 +46,7 @@ class ChatMessage {
         authorRole = snapshot.value["role"].toString(),
         authorID = snapshot.value["userID"].toString(),
         mediaType = snapshot.value["type"].toString(),
+        nsfw = snapshot.value["nsfw"],
         author = snapshot.value["author"].toString();
 
   toJson() {
@@ -63,7 +65,9 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
   FocusNode myFocusNode = new FocusNode();
   ScrollController _scrollController = new ScrollController();
   List<ChatMessage> messageList = new List();
+  List<String> noNoWordList = new List();
   bool _visible = false;
+  bool _nsfw = false;
 
   Color sendColor = Colors.grey;
 
@@ -72,6 +76,7 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
   Color adminColor = Colors.grey;
   Color botColor = Colors.grey;
   Color advisorColor = Colors.grey;
+  Color chaperoneColor = Colors.grey;
 
   String type = "text";
   String message = "";
@@ -84,12 +89,16 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
         adminColor = HexColor(snapshot.value["adminColor"]);
         botColor = HexColor(snapshot.value["botColor"]);
         advisorColor = HexColor(snapshot.value["advisorColor"]);
+        chaperoneColor = HexColor(snapshot.value["chaperoneColor"]);
       });
     });
     databaseRef.child("chat").child(selectedChat).onChildAdded.listen(onNewMessage);
     if (role != "Member") {
       _visible = true;
     }
+    databaseRef.child("chatNoNoWords").onChildAdded.listen((Event event) {
+      noNoWordList.add(event.snapshot.value.toString());
+    });
   }
 
   void sendImageDialog() {
@@ -106,19 +115,40 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
   }
 
   onNewMessage(Event event) async {
-    setState(() {
-      messageList.add(new ChatMessage.fromSnapshot(event.snapshot));
-    });
-    await new Future.delayed(const Duration(milliseconds: 300));
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent + 10.0,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
+    if (event.snapshot.value["nsfw"]) {
+      // This message contains a No No Word
+      if (role != "Advisor" && role != "Chaperone") {
+        setState(() {
+          messageList.add(new ChatMessage.fromSnapshot(event.snapshot));
+        });
+        await new Future.delayed(const Duration(milliseconds: 300));
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent + 10.0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    }
+    else {
+      setState(() {
+        messageList.add(new ChatMessage.fromSnapshot(event.snapshot));
+      });
+      await new Future.delayed(const Duration(milliseconds: 300));
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent + 10.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   void sendMessage() {
     if (message != "" && message != " " && message != "  " && message != "  ") {
+      noNoWordList.forEach((badWord) {
+        if (message.toLowerCase().contains(badWord)) {
+          _nsfw = true;
+        }
+      });
       databaseRef.child("chat").child(selectedChat).push().update({
         "author": name,
         "message": message,
@@ -126,12 +156,14 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
         "date": formatDate(DateTime.now(), [dd, '/', mm, '/', yyyy, ' ', HH, ':', nn]),
         "role": role,
         "type": type,
+        "nsfw": _nsfw
       });
       myController.clear();
       setState(() {
         message = "";
         sendColor = Colors.grey;
       });
+      _nsfw = false;
     }
   }
   
@@ -170,7 +202,9 @@ class _GlobalChatPageState extends State<GlobalChatPage> {
     else if (authorRole == "Bot") {
       return botColor;
     }
-
+    else if (authorRole == "Chaperone") {
+      return chaperoneColor;
+    }
   }
 
   bool getVisibility(String authorRole, String messageAuthor) {

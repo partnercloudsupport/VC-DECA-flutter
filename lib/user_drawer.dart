@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'main.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluro/fluro.dart';
 import 'user_info.dart';
 
@@ -131,8 +131,8 @@ class _UserDrawerState extends State<UserDrawer> {
                         new Row(
                           children: <Widget>[
                             new ClipOval(
-                              child: new Image.network(
-                                profilePic,
+                              child: new CachedNetworkImage(
+                                imageUrl: profilePic,
                                 width: 50.0,
                                 height: 50.0,
                                 fit: BoxFit.fill,
