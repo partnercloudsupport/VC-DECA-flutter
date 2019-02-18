@@ -14,6 +14,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'user_drawer.dart';
 import 'user_info.dart';
+import 'package:geolocator/geolocator.dart';
 
 class TabBarController extends StatefulWidget {
   @override
@@ -33,6 +34,9 @@ class _TabBarControllerState extends State<TabBarController> {
 
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final databaseRef = FirebaseDatabase.instance.reference();
+
+  var geolocator = Geolocator();
+  var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
 
   String title = "VC DECA";
 
@@ -211,12 +215,10 @@ class _TabBarControllerState extends State<TabBarController> {
 
   void firebaseCloudMessaging_Listeners() {
     if (Platform.isIOS) iOS_Permission();
-
     _firebaseMessaging.getToken().then((token){
       print("FCM Token: " + token);
       databaseRef.child("users").child(userID).update({"fcmToken": token});
     });
-
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('on message $message');
@@ -240,6 +242,7 @@ class _TabBarControllerState extends State<TabBarController> {
       print("Settings registered: $settings");
     });
   }
+
   @override
   void initState() {
     super.initState();

@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is used to allow adult chaperones and club advisors to determine where you are during conferences and club events</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is used to allow adult chaperones and club advisors to determine where you are during conferences and club events</string>
 	<key>CFBundleDisplayName</key>
 	<string>VC DECA</string>
 	<key>CFBundleExecutable</key>
@@ -21,7 +25,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>25</string>
+	<string>26</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<string>NO</string>
 	<key>LSRequiresIPhoneOS</key>

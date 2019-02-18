@@ -16,12 +16,19 @@ class _ConferenceMediaPageState extends State<ConferenceMediaPage> {
 
   final databaseRef = FirebaseDatabase.instance.reference();
   final storageRef = FirebaseStorage.instance.ref();
+
+  bool _visible = true;
   
   _ConferenceMediaPageState() {
     databaseRef.child("conferences").child(selectedYear).child("media").onChildAdded.listen((Event event) {
       print(event.snapshot.value);
       setState(() {
         _tiles.add(event.snapshot.value);
+      });
+    });
+    databaseRef.child("allowConferenceImageUpload").once().then((DataSnapshot snapshot) {
+      setState(() {
+        _visible = snapshot.value;
       });
     });
   }
@@ -59,9 +66,12 @@ class _ConferenceMediaPageState extends State<ConferenceMediaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: new FloatingActionButton(
-        child: new Icon(Icons.add),
-        onPressed: newImage,
+      floatingActionButton: new Visibility(
+        visible: _visible,
+        child: new FloatingActionButton(
+          child: new Icon(Icons.add),
+          onPressed: newImage,
+        ),
       ),
       body: new Container(
           color: Colors.white,
